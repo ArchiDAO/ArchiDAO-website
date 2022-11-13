@@ -10,7 +10,7 @@ import { MeshRefractionMaterial } from '../shaders/MeshRefractionMaterial'
 
 function Rig({ v = new THREE.Vector3() }) {
     return useFrame((state) => {
-      state.camera.position.lerp(v.set(state.mouse.x / 2 + 4, state.mouse.y / 2, 4), 0.05)
+      state.camera.position.lerp(v.set(state.mouse.x / 2 + 6, state.mouse.y / 2, 6), 0.05)
     })
   }
 
@@ -30,7 +30,7 @@ return (
       onPointerOut={(event) => hover(false)}
   letterSpacing={0} height={0.02}size={0.4} font="/Inter_Medium_Regular.json" >
     {props.children}
-  <meshStandardMaterial  color={hovered ? 'gray' : 'black'} />
+  <meshStandardMaterial  color={hovered ? 'chocolate' : 'black'} />
 </Text3D> 
     
     )
@@ -62,7 +62,7 @@ export default function Header() {
   })
   return (
     <Canvas shadows orthographic camera={{ position: [20, 20, 20], zoom: 90, fov:22 }} gl={{ preserveDrawingBuffer: true }} dpr={[1,2]}>
-      {/* <color attach="background" args={['#f2f2f5']} /> */}
+      <color attach="background" args={['#f2f2f5']} />
      
       {/* <mesh scale={500}>
         <boxGeometry args={[2,2,2]} />
