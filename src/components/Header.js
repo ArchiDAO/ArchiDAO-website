@@ -77,10 +77,10 @@ export default function Header() {
       </Text>
       
         <ColorText rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -2]}>AEC tech</ColorText>
-       {/* <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -1]}>metaverse </ColorText>
+       <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -1]}>metaverse </ColorText>
       <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 0]}>web3 blockchain </ColorText>
       <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 1]}>products</ColorText>
-      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 2]}>education </ColorText>  */}
+      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 2]}>education </ColorText> 
       {/** Controls */}
       <OrbitControls
         autoRotate={autoRotate}
