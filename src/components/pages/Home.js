@@ -1,5 +1,6 @@
 
 import  Header  from '../Header'
+import { Suspense } from 'react'
 
 
 
@@ -35,7 +36,7 @@ export default function Home() {
  
           <Overlay />
           <Header />
-          
+         
 
     </>
 

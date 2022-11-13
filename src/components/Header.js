@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useRef , useState } from 'react'
+import { useRef , useState , Suspense} from 'react'
 import { RGBELoader } from 'three-stdlib'
 import { Canvas, useFrame,  useLoader } from '@react-three/fiber'
 import { useFBO, Center, Text3D, Instance, Instances, Environment, Lightformer, OrbitControls, RandomizedLight, AccumulativeShadows } from '@react-three/drei'
@@ -61,6 +61,7 @@ export default function Header() {
     })
   })
   return (
+    <Suspense fallback={<div style={{width:'100%', height:'80%',position:'absolute', display:'flex', justifyContent:'center',alignItems:'center', letterSpacing:'0.7em' }}>LOADING...</div>} >
     <Canvas shadows orthographic camera={{ position: [20, 20, 20], zoom: 110, fov:22 }} gl={{ preserveDrawingBuffer: true }} dpr={[1,2]}>
       <color attach="background" args={['#f2f2f5']} />
      
@@ -119,6 +120,7 @@ export default function Header() {
       </AccumulativeShadows>
      <Rig />
     </Canvas>
+    </Suspense>
   )
 }
 
