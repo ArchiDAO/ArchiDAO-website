@@ -39,3 +39,8 @@ a {
 svg {
   fill: black;
 }
+
+
+#leva__root{
+  display: none;
+}

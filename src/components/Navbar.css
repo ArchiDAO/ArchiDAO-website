@@ -60,6 +60,10 @@ nav{
     padding-left: 10vw;
     justify-content: center;
     height: 100vh;
+   
+}
+
+ul{
     cursor: pointer;
 }
 

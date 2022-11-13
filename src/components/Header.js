@@ -61,7 +61,7 @@ export default function Header() {
     })
   })
   return (
-    <Canvas shadows orthographic camera={{ position: [20, 20, 20], zoom: 90, fov:22 }} gl={{ preserveDrawingBuffer: true }} dpr={[1,2]}>
+    <Canvas shadows orthographic camera={{ position: [20, 20, 20], zoom: 110, fov:22 }} gl={{ preserveDrawingBuffer: true }} dpr={[1,2]}>
       <color attach="background" args={['#f2f2f5']} />
      
       {/* <mesh scale={500}>
