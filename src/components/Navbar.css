@@ -28,8 +28,8 @@ nav{
 
 .burguer-bar{
     width: 4em;
-    height: 0.2em;
-    background-color: white;
+    height: 2px;
+    background-color: black;
     border-radius: 0.2em;
 }
 
@@ -85,16 +85,19 @@ ul{
 
 .burguer-bar.clicked:nth-child(1){
     transform: rotate(25deg) translate(-0.1em, 0.75em);
+    background-color: white;
     transition: ease-out 0.5s;
 }
 
 .burguer-bar.clicked:nth-child(2){
     transform: scale(0);
+    background-color: white;
     transition: ease-out 0.5s;
 }
 
 .burguer-bar.clicked:nth-child(3){
     transform: rotate(-25deg) translate(-0.4em, -0.4em);
+    background-color: white;
     transition: ease-out 0.5s;
 }
 
