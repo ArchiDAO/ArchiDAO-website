@@ -1,5 +1,5 @@
 
-import { Header } from '../components/Header'
+import  Header  from '../Header'
 
 
 
@@ -26,7 +26,7 @@ function Overlay() {
     )
   }
 
-export function Home() {
+export default function Home() {
  
     // const [isOpen, setOpen] = useState(false)
 

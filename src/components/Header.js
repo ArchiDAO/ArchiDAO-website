@@ -1,46 +1,44 @@
 import * as THREE from 'three'
-import { useRef , useState} from 'react'
+import { useRef , useState } from 'react'
 import { RGBELoader } from 'three-stdlib'
 import { Canvas, useFrame,  useLoader } from '@react-three/fiber'
 import { useFBO, Center, Text3D, Instance, Instances, Environment, Lightformer, OrbitControls, RandomizedLight, AccumulativeShadows } from '@react-three/drei'
 import { useControls, button } from 'leva'
 import { MeshRefractionMaterial } from '../shaders/MeshRefractionMaterial'
-import { LayerMaterial, Depth, Noise } from 'lamina'
+// import { LayerMaterial, Depth, Noise } from 'lamina'
 
 
 function Rig({ v = new THREE.Vector3() }) {
     return useFrame((state) => {
-      state.camera.position.lerp(v.set(state.mouse.x / 2 + 6, state.mouse.y / 2, 6), 0.05)
+      state.camera.position.lerp(v.set(state.mouse.x / 2 + 4, state.mouse.y / 2, 4), 0.05)
     })
   }
 
 
 function ColorText(props) {
 
-const ref = useRef()
+// const ref = useRef()
 const [hovered, hover] = useState(false)
 const [clicked, click] = useState(false)
 // useFrame((state, delta) => (ref.current.rotation.x += delta))
 return (
-    <Text3D 
-    {...props}
-    ref={ref}
-    scale={clicked ? 1.5 : 1}
-    onClick={(event) => click(!clicked)}
-    onPointerOver={(event) => hover(true)}
-    onPointerOut={(event) => hover(false)}
-         letterSpacing={0} height={0.02}size={0.4} font="/EB.json" >
-            {props.children}
-            <meshStandardMaterial color={hovered ? 'pink' : 'black'} />
-
-         </Text3D>
+  <Text3D 
+  {...props}
+   scale={clicked ? 1.5 : 1}
+      onClick={(event) => click(!clicked)}
+  onPointerOver={(event) => hover(true)}
+      onPointerOut={(event) => hover(false)}
+  letterSpacing={0} height={0.02}size={0.4} font="/Inter_Medium_Regular.json" >
+    {props.children}
+  <meshStandardMaterial  color={hovered ? 'gray' : 'black'} />
+</Text3D> 
     
     )
     }
 
 
 
-export function Header() {
+export default function Header() {
   const { autoRotate, text, shadow, ...config } = useControls({
     text: '&',
     clearcoat: { value: 0.79, min: 0.1, max: 1 },
@@ -66,22 +64,23 @@ export function Header() {
     <Canvas shadows orthographic camera={{ position: [20, 20, 20], zoom: 90, fov:22 }} gl={{ preserveDrawingBuffer: true }} dpr={[1,2]}>
       {/* <color attach="background" args={['#f2f2f5']} /> */}
      
-      <mesh scale={500}>
+      {/* <mesh scale={500}>
         <boxGeometry args={[2,2,2]} />
         <LayerMaterial side={THREE.BackSide}>
           <Depth colorB="pink" colorA="skyblue" alpha={0.4} mode="darken" near={130} far={500} origin={[100, 100, -100]} />
           <Noise mapping="local" type="white" scale={1000} colorA="green" colorB="pink" mode="normal" alpha={0.4} />
         </LayerMaterial>
-      </mesh>
+      </mesh> */}
       {/** The text and the grid */}
       <Text config={config} rotation={[-Math.PI / 2, 0, -2.25]} position={[-1, -1, -5.2]}>
         {text}
       </Text>
-      <ColorText rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -2]}>AEC tech</ColorText>
-      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -1]}>metaverse </ColorText>
+      
+        <ColorText rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -2]}>AEC tech</ColorText>
+       {/* <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -1]}>metaverse </ColorText>
       <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 0]}>web3 blockchain </ColorText>
       <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 1]}>products</ColorText>
-      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 2]}>education </ColorText>
+      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 2]}>education </ColorText>  */}
       {/** Controls */}
       <OrbitControls
         autoRotate={autoRotate}
