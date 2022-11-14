@@ -11,6 +11,7 @@ nav{
     justify-content: flex-end;
     padding: 1em;
     z-index: 100;
+    color:white;
    
 }
 
@@ -36,12 +37,12 @@ nav{
 .menu{
     width: 100%;
     height: 130vh;
-    background-color: rgba(38, 36, 36, 1);
+    background-color: rgb(15, 15, 15);
     position:absolute;
     top: 0;
     z-index: 99;
     color: white;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-family: 'Krona One', sans-serif;
     letter-spacing: 0.5em;
     font-size: 30px ;
     border:0em;
@@ -63,8 +64,14 @@ nav{
    
 }
 
-ul{
+li{
     cursor: pointer;
+    margin-bottom: 1.5em;
+    color:white;
+}
+
+li::marker{
+   color:rgb(15, 15, 15)
 }
 
 .hidden{

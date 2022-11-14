@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './Navbar.css';
+import { Link } from "react-router-dom";
+
 
 export default function Navbar()  {
 
@@ -34,12 +36,16 @@ export default function Navbar()  {
             </nav>
             
             <div className={menu_class}> 
-                <div className='menuitems'>
-                <ul >ABOUT</ul>
-                <ul >PROJECTS</ul>
-                <ul onClick={updateMenu}>+ GUILDS</ul>
-                <ul>CONTACT</ul>
-                <ul>PEOPLE</ul>
+                <div className='menuitems' onClick={updateMenu}>
+               
+                     <li><Link style={{color:'white'}} to="/About" >ABOUT</Link></li>
+                     <li><Link style={{color:'white'}}to="/Projects" >PROJECTS</Link></li>
+                     
+                    <li><Link style={{color:'white'}} to="/">+ GUILDS</Link></li>
+          
+                    <li><Link style={{color:'white'}} to="/Contact">CONTACT</Link></li>
+                   <li> <Link style={{color:'white'}} to="/People">PEOPLE</Link></li>
+                 
                 </div>
             </div>
         </div>
