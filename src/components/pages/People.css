@@ -1,13 +1,13 @@
 
 .people{
     color: black;
-    height: 100vh;
+    height: 10vh;
     width: 100vw;
     position:relative;
     padding-left: 100px;
     padding-right: 100px;
     padding-top: 80px;
-   
+   z-index: 100;
 }
 
 .ppeople{
@@ -28,4 +28,13 @@
 
 .person__data{
     width: 200px;
+}
+
+.canva-container{
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
 }
