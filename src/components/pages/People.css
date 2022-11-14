@@ -1,3 +1,4 @@
+
 .people{
     color: black;
     height: 100vh;
@@ -6,9 +7,25 @@
     padding-left: 100px;
     padding-right: 100px;
     padding-top: 80px;
-    overflow: 'auto'
+   
 }
 
 .ppeople{
-    color: black
+    color: black;
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.person{
+    display: flex;
+    width: 90vw;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: top;
+    
+}
+
+.person__data{
+    width: 200px;
 }

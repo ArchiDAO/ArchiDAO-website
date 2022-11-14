@@ -5,6 +5,8 @@
 import * as csv from 'csvtojson';
 import React, { useState , useEffect} from 'react';
 import './People.css';
+import Names from '../Names';
+
 
 csv({
     output: "csv",
@@ -72,15 +74,21 @@ export default function People() {
     if (loading) return "Loading...";
     if (error) return "Error!";
     return (
+        <>
         <div className="people">
-            <p className='ppeople' >We are many</p>
+            
+            <p className='ppeople' >We are many. These are some.</p>
+            <p className='ppeople' >Join us <a href='https://forms.gle/HcWnT64o79awMsfk9' style={{ color: 'chocolate'  }}>here</a> and become a part of the future.</p>
+            
                 <div className="person">
                 {data.map((person) => (
-                    <div key={person.name}>
-                        <h3>{person.name}</h3>
+                    <div className='person__data' key={person.nationality}>
+                        <h3 >{person.nationality}</h3>
                     </div>))}
            </div>
            </div>
+           <Names />
+           </>
            
            )
 }

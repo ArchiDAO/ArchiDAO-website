@@ -1,12 +1,11 @@
 {
-  "name": "inter-epoxy-resin",
+  "name": "archidao",
   "version": "1.0.0",
   "description": "archidao",
   "keywords": [
-    "refraction",
-    "shaders",
-    "glass",
-    "epoxy"
+    "architecture",
+    "dao"
+    
   ],
   "main": "src/index.js",
   "dependencies": {
