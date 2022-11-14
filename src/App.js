@@ -7,6 +7,7 @@ import './styles.css';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
 import Navbar from './components/Navbar';
+import People from './components/pages/People';
 // import Dashboard from './components/pages/Dashboard';
 
 
@@ -23,8 +24,10 @@ function App() {
                   <Route exact path="/" element={<Home/>}/>
                   <Route exact path="/home" element={<Home/>}/>
                   <Route exact path="/about" element={<About/>}/>
+                  <Route exact path="/people" element={<People/>}/>
                 </Routes>          
             </Router>
+            
       </>
 
   );

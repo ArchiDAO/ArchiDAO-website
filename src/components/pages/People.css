@@ -1,0 +1,14 @@
+.people{
+    color: black;
+    height: 100vh;
+    width: 100vw;
+    position:relative;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 80px;
+    overflow: 'auto'
+}
+
+.ppeople{
+    color: black
+}

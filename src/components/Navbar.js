@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState , Suspense} from 'react';
 import './Navbar.css';
 import { Link } from "react-router-dom";
+import Logo from './images/logo.png';
 
 
 export default function Navbar()  {
@@ -45,9 +46,12 @@ export default function Navbar()  {
           
                     <li><Link style={{color:'white'}} to="/Contact">CONTACT</Link></li>
                    <li> <Link style={{color:'white'}} to="/People">PEOPLE</Link></li>
-                 
+                   
+                   <img className="logo" src={Logo} alt="logo" />
+                  
                 </div>
             </div>
+           
         </div>
     )
     }
