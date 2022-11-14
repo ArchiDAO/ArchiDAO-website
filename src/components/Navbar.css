@@ -12,6 +12,7 @@ nav{
     padding: 1em;
     z-index: 100;
     color:white;
+    
    
 }
 
@@ -29,9 +30,11 @@ nav{
 
 .burguer-bar{
     width: 4em;
-    height: 2px;
-    background-color: black;
+    height: 3px;
+    background-color: white;
     border-radius: 0.2em;
+   /* add shadow */
+    box-shadow: 0 0 0.2em 0em  rgb(0, 0, 0);
 }
 
 .menu{
