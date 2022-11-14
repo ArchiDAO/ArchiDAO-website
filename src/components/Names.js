@@ -31,7 +31,10 @@ export default function Names() {
             );
             setData(people);
             setLoading(false);
-            console.log(people);
+            // console.log(people);
+
+            data.map((person) => (
+                person.name))
         })
         .catch((error) => {
             setError(error);
@@ -40,20 +43,9 @@ export default function Names() {
         );
     }, []);
 
-    if (loading) return "Loading...";
-    if (error) return "Error!";
-    return (
-        <div >
-           
-            
-                <div className="person">
-                {data.map((person) => (
-                    <div className='person__data' key={person.name}>
-                        <h3 >{person.name}</h3>
-                    </div>))}
-           </div>
-           </div>
-
-           
+    // if (loading) return "Loading...";
+    // if (error) return "Error!";
+    return (<>
+    {console.log(data)}</>         
            )
 }
