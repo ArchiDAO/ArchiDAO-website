@@ -14,87 +14,24 @@ import { SSAOPass } from "three-stdlib"
 
 extend({ SSAOPass })
 
-// function Sheet () {
-//     csv({
-//         output: "csv",
-//       });
-//       const url =
-//         "https://docs.google.com/spreadsheets/d/e/2PACX-1vRTSl1iJs_f8SxUon33W-VoCxwnv7vY4VzFwSaCJ7dirEMLA2pvnWmSN4pgylc_S0805Mf9AaTEdJNp/pub?output=csv";
+const rfs = THREE.MathUtils.randFloatSpread
+    const sphereGeometry = new THREE.IcosahedronGeometry(1, 0)
+    // const sphereGeometry = new THREE.SphereGeometry(1, 32, 32)
 
-//     const [data, setData] = useState([]);
-//     const [loading, setLoading] = useState(true);
-//     const [error, setError] = useState(null);
-    
-//     useEffect(() => {
-//         fetch(url)
-//         .then((response) => response.text())
-//         .then((data) => {
-//             const people = data
-//             .split("\n")
-//             .slice(1)
-//             .map((row) => {
-//                 const columns = row.split(",");
-//                 const time = columns[0];
-//                 const email = columns[1];
-//                 const names = columns[2];
-//                 const discord = columns[3];
-//                 const nationality = columns[4];
-//                 const city = columns[5];
-//                 const timezone = columns[6];
-//                 const age = columns[7];
-//                 const social = columns[8];
-//                 const profession = columns[9];
-//                 const skillDiscord = columns[10];
-//                 const skillDAO = columns[11];
-//                 const skillNFT = columns[12];
-//                 const skillVR = columns[13];
-//                 const skillAR = columns[14];
-//                 const skillFab = columns[15];
-//                 const skillSC = columns[16];
-//                 const skillMV = columns[17];
-//                 const skillWeb = columns[18];
-//                 const skillAI = columns[19];
-//                 const skillPD = columns[20];
-//                 const interests = columns[21];
-//                 const ethereum = columns[22];
-//                 const skillBIM = columns[23];
-//                 const skillDesign = columns[24];
-
-//                 return { time , email, names, discord, nationality, city, timezone, age, social, profession, skillDiscord
-//                  , skillDAO, skillNFT, skillVR, skillAR, skillFab, skillSC, skillMV, skillWeb, skillAI, skillPD, interests, ethereum, skillBIM, skillDesign };
-//             }
-//             );
-//             setData(people);
-//             setLoading(false);
-                    
-            
-//         })
-//         .catch((error) => {
-//             setError(error);
-//             setLoading(false);
-//         }
-//         );
-//     }, []);
-
-//     // console.log(people.names)   
-
-//     // if (loading) return "Loading...";
-//     // if (error) return "Error!";
-//     return (<>
-//         {console.log(data)}</>         
-//                )
-// }
-
-    const rfs = THREE.MathUtils.randFloatSpread
-    const sphereGeometry = new THREE.SphereGeometry(1, 32, 32)
-    const baubleMaterial = new THREE.MeshStandardMaterial({ color: "red", roughness: 0, envMapIntensity: 0.2, emissive: "#370037" })
-
+    const baubleMaterial = new THREE.MeshStandardMaterial({ color: "gray", roughness: 0, envMapIntensity: 0.2, emissive: "#370037" })
 
 export default function People() {
+  
+
+    
+
+
+// export default function People() {
 
     
     return (
         <>
+         
         <div className="people">
             
             <p className='ppeople' >A 3D tale of who we are.</p>
@@ -122,23 +59,91 @@ export default function People() {
                     </div>*/}
            
            {/* <Names data={data} /> */}
+          
            </>
            
            )
 }
 
-function Clump({ mat = new THREE.Matrix4(), vec = new THREE.Vector3(), ...props }) {
+async function Clump ({ mat = new THREE.Matrix4(), vec = new THREE.Vector3(), ...props }) { 
+
 
     
+  {
+    csv({
+        output: "csv",
+      });
+      const url =
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRTSl1iJs_f8SxUon33W-VoCxwnv7vY4VzFwSaCJ7dirEMLA2pvnWmSN4pgylc_S0805Mf9AaTEdJNp/pub?output=csv";
 
+    const [info, setInfo] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    // const [nomes, setNomes] = useState([]);
+    let listaNomes = [];
+    useEffect(() => {
+        fetch(url)
+        .then((response) => response.text())
+        .then((data) => {
+            const people = data
+            .split("\n")
+            .slice(1)
+            .map((row) => {
+                const columns = row.split(",");
+                const time = columns[0];
+                const email = columns[1];
+                const nomes = columns[2];
+                const discord = columns[3];
+                const nationality = columns[4];
+                const city = columns[5];
+                const timezone = columns[6];
+                const age = columns[7];
+                const social = columns[8];
+                const profession = columns[9];
+                const skillDiscord = columns[10];
+                const skillDAO = columns[11];
+                const skillNFT = columns[12];
+                const skillVR = columns[13];
+                const skillAR = columns[14];
+                const skillFab = columns[15];
+                const skillSC = columns[16];
+                const skillMV = columns[17];
+                const skillWeb = columns[18];
+                const skillAI = columns[19];
+                const skillPD = columns[20];
+                const interests = columns[21];
+                const ethereum = columns[22];
+                const skillBIM = columns[23];
+                const skillDesign = columns[24];
 
-    // const textRef = useRef()
-    const texture = useTexture("/noise.jpg")
-    //create one texture for each data.names
-    // for (let i = 0; i < data.lenght; i++) {
-    //   mat.setPosition(vec.set(rfs(20), rfs(20), rfs(20)))
-    //   useSphere(() => ({ mass: 1, position: [rfs(20), rfs(20), rfs(20)], args: 1, ...props }))
-    // }
+                return { time , email, nomes, discord, nationality, city, timezone, age, social, profession, skillDiscord
+                 , skillDAO, skillNFT, skillVR, skillAR, skillFab, skillSC, skillMV, skillWeb, skillAI, skillPD, interests, ethereum, skillBIM, skillDesign };
+            }
+            );
+            setInfo(people);
+            setLoading(false);
+            // console.log(data[0].nomes)   
+            // for (let i = 0; i < people.length; i++) {
+            //     listaNomes.push(people[i].nomes)
+            // }
+           
+            console.log(info)
+
+            
+        })
+        .catch((error) => {
+            setError(error);
+            setLoading(false);
+        }
+        );
+    }, []);
+
+    
+}
+    
+    setTimeout(() => {
+
+  
     const [ref, api] = useSphere(() => ({ args: [1], mass: 1, angularDamping: 0.1, linearDamping: 0.65, position: [rfs(20), rfs(20), rfs(20)] }))
     useFrame((state) => {
       for (let i = 0; i < 40; i++) {
@@ -149,8 +154,30 @@ function Clump({ mat = new THREE.Matrix4(), vec = new THREE.Vector3(), ...props 
         api.at(i).applyForce(vec.setFromMatrixPosition(mat).normalize().multiplyScalar(-50).toArray(), [0, 0, 0])
       }
     })
-    return <instancedMesh ref={ref} castShadow receiveShadow args={[null, null, 35 ]} geometry={sphereGeometry} material={baubleMaterial} material-map={texture} />
-  }
+    // return <instancedMesh ref={ref} castShadow receiveShadow args={[null, null, 35 ]} geometry={sphereGeometry} material={baubleMaterial} material-map={texture} />
+   
+
+    return info.map(item => (
+      <mesh ref={ref} key={item.nomes} castShadow receiveShadow  >
+        <sphereGeometry />
+            <meshStandardMaterial>
+            <RenderTexture attach="map" anisotropy={16}>
+            <PerspectiveCamera makeDefault manual aspect={1 / 1} position={[0, 0, 5]} />
+            <color attach="background" args={['orange']} />
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[10, 10, 5]} />
+            <Text  fontSize={4} color="#555">
+              {item.nomes}
+            </Text>
+            </RenderTexture>
+         </meshStandardMaterial>
+      </mesh>
+      
+    ))
+
+  }, 1000);
+}
+
   
   function Pointer() {
     const viewport = useThree((state) => state.viewport)

@@ -7,7 +7,7 @@ import './styles.css';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
 import Navbar from './components/Navbar';
-import People from './components/pages/People';
+import People from './components/pages/People copy';
 // import Dashboard from './components/pages/Dashboard';
 
 
