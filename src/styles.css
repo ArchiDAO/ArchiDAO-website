@@ -45,6 +45,38 @@ svg {
   display: none;
 }
 
+.content{
+  color:black;
+  font-size: 2px;
+  font-family: 'EB Garamond', serif;
+  line-height: 2px;
+  position: absolute;
+  
+  left: -20px;
+  bottom: 7px;
+  width: 50px;
+
+ 
+
+}
+
+.hiddentext {
+  display: none;
+}
+
+
+/* .content::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 20px;
+  width: 1px;
+  background: black;
+} */
+
+
+
 @media screen and (max-width: 768px) {
   html,
   body,
@@ -56,3 +88,4 @@ svg {
 
 
 }
+

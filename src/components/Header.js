@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { useRef , useState , Suspense} from 'react'
 import { RGBELoader } from 'three-stdlib'
 import { Canvas, useFrame,  useLoader } from '@react-three/fiber'
-import { useFBO, Center, Text3D, Instance, Instances, Environment, Lightformer, OrbitControls, RandomizedLight, AccumulativeShadows } from '@react-three/drei'
+import { useFBO, Center, Text3D, Instance, Instances, Environment, Lightformer, OrbitControls, RandomizedLight, AccumulativeShadows, Html } from '@react-three/drei'
 import { useControls, button } from 'leva'
 import { MeshRefractionMaterial } from '../shaders/MeshRefractionMaterial'
 // import { LayerMaterial, Depth, Noise } from 'lamina'
@@ -14,6 +14,8 @@ function Rig({ v = new THREE.Vector3() }) {
     })
   }
 
+ 
+
 
 function ColorText(props) {
 
@@ -22,8 +24,9 @@ const [hovered, hover] = useState(false)
 const [clicked, click] = useState(false)
 // useFrame((state, delta) => (ref.current.rotation.x += delta))
 return (
+  <mesh {...props}>
   <Text3D 
-  {...props}
+  // {...props}
    scale={clicked ? 1.5 : 1}
       onClick={(event) => click(!clicked)}
   onPointerOver={(event) => hover(true)}
@@ -31,7 +34,19 @@ return (
   letterSpacing={0} height={0.02}size={0.4} font="/Inter_Medium_Regular.json" >
     {props.children}
   <meshStandardMaterial  color={hovered ? 'chocolate' : 'black'} />
+
 </Text3D> 
+<Html distanceFactor={0.1} >
+        <div className={hovered ? "content" : 'hiddentext'} >
+        {/* if condition depending on props.children content */}
+        {props.children === 'AEC tech' ? <div>about</div> : null}
+        {props.children === 'metaverse' ? <div>something about metaverse</div> : null}
+        {props.children === 'web3 blockchain' ? <div>something about web3</div> : null}
+        {props.children === 'services' ? <div>something about it</div> : null}
+        {props.children === 'education' ? <div>something about education</div> : null}
+        </div>
+      </Html>
+</mesh>
     
     )
     }
@@ -77,11 +92,24 @@ export default function Header() {
         {text}
       </Text>
       
-        <ColorText rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -2]}>AEC tech</ColorText>
-       <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -1]}>metaverse </ColorText>
-      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 0]}>web3 blockchain </ColorText>
-      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 1]}>products</ColorText>
-      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 2]}>education </ColorText> 
+        <ColorText rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -2]}>AEC tech
+        {/* <Html distanceFactor={0.1} >
+        <div className="content" >
+          hello <br />
+          world
+        </div>
+      </Html> */}
+        </ColorText>
+        
+       <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -1]}>metaverse 
+      
+</ColorText>
+      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 0]}>web3 blockchain 
+     </ColorText>
+      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 1]}>services
+     </ColorText>
+      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 2]}>education 
+     </ColorText> 
       {/** Controls */}
       <OrbitControls
         autoRotate={autoRotate}

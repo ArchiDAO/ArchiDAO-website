@@ -25,6 +25,17 @@ export default function People() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [ref, api] = useSphere(() => ({ args: [1], mass: 1, angularDamping: 0.1, linearDamping: 0.65, position: [rfs(20), rfs(20), rfs(20)] }))
+  useFrame((state) => {
+    for (let i = 0; i < 40; i++) {
+      // Get current whereabouts of the instanced sphere
+      ref.current.getMatrixAt(i, mat)
+      // Normalize the position and multiply by a negative force.
+      // This is enough to drive it towards the center-point.
+      api.at(i).applyForce(vec.setFromMatrixPosition(mat).normalize().multiplyScalar(-50).toArray(), [0, 0, 0])
+    }
+  })
   
   useEffect(() => {
       fetch(url)
@@ -76,16 +87,7 @@ export default function People() {
       );
   }, []);
 
-  // const [ref, api] = useSphere(() => ({ args: [1], mass: 1, angularDamping: 0.1, linearDamping: 0.65, position: [rfs(20), rfs(20), rfs(20)] }))
-  // useFrame((state) => {
-  //   for (let i = 0; i < 40; i++) {
-  //     // Get current whereabouts of the instanced sphere
-  //     ref.current.getMatrixAt(i, mat)
-  //     // Normalize the position and multiply by a negative force.
-  //     // This is enough to drive it towards the center-point.
-  //     api.at(i).applyForce(vec.setFromMatrixPosition(mat).normalize().multiplyScalar(-50).toArray(), [0, 0, 0])
-  //   }
-  // })
+  
 
   if (loading) return "Loading...";
   if (error) return "Error!";
@@ -109,13 +111,15 @@ export default function People() {
                         <meshStandardMaterial attach="material" opacity={1} />
                     </mesh> */}
 
-<> {data.map((person) => (
+
+            {function Clump ({ mat = new THREE.Matrix4(), vec = new THREE.Vector3(), ...props }){
+           <> {data.map((person) => (
                   <mesh 
-                  // ref={ref} 
+                  ref={ref} 
                   key={person.nomes} 
                   castShadow receiveShadow  >
                     <sphereGeometry />
-                        <meshStandardMaterial>
+                        <meshStandardMaterial >
                         <RenderTexture attach="map" anisotropy={16}>
                         <PerspectiveCamera makeDefault manual aspect={1 / 1} position={[0, 0, 5]} />
                         <color attach="background" args={['red']} />
@@ -128,54 +132,7 @@ export default function People() {
                      </meshStandardMaterial>
                   </mesh>))}
                   </>
-
-
-              {/* {setTimeout(() => {
-              
-              function Clump({ mat = new THREE.Matrix4(), vec = new THREE.Vector3(), ...props }) {
-              const [ref, api] = useSphere(() => ({ args: [1], mass: 1, angularDamping: 0.1, linearDamping: 0.65, position: [rfs(20), rfs(20), rfs(20)] }))
-                useFrame((state) => {
-                  for (let i = 0; i < 40; i++) {
-                    // Get current whereabouts of the instanced sphere
-                    ref.current.getMatrixAt(i, mat)
-                    // Normalize the position and multiply by a negative force.
-                    // This is enough to drive it towards the center-point.
-                    api.at(i).applyForce(vec.setFromMatrixPosition(mat).normalize().multiplyScalar(-50).toArray(), [0, 0, 0])
-                  }
-                })
-
-                return (
-                // info.map(item => (
-                  <mesh 
-                  // ref={ref} key={item.nomes} 
-                  castShadow receiveShadow  >
-                    <sphereGeometry />
-                        <meshStandardMaterial>
-                        <RenderTexture attach="map" anisotropy={16}>
-                        <PerspectiveCamera makeDefault manual aspect={1 / 1} position={[0, 0, 5]} />
-                        <color attach="background" args={['orange']} />
-                        <ambientLight intensity={0.5} />
-                        <directionalLight position={[10, 10, 5]} />
-                        <Text  fontSize={4} color="#555">
-                          {/* {item.nomes}  try
-                        </Text>
-                        </RenderTexture>
-                     </meshStandardMaterial>
-                  </mesh>
-                )
-              
-              
-              
-}}, 1000)} */}
-
-
-
-
-                    {/* <div className="person">
-                    {data.map((person) => (
-                    <div className='person__data' key={person.nationality}>
-                        <h3 >{person.name}</h3>
-                    </div>))} </div> */}
+                }}
 
 
             </Physics>
@@ -186,8 +143,7 @@ export default function People() {
             </div>
            
            </>
-           
-           )
+                      )
 }
  
   
@@ -211,3 +167,10 @@ function Effects(props) {
   
 /////////////////////////////////////////end
 
+
+
+                    {/* <div className="person">
+                    {data.map((person) => (
+                    <div className='person__data' key={person.nationality}>
+                        <h3 >{person.name}</h3>
+                    </div>))} </div> */}

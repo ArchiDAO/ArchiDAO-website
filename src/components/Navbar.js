@@ -32,7 +32,7 @@ export default function Navbar()  {
                 <div className="burguer-menu" onClick={updateMenu}>
                     <div className={burguer_class} > </div>
                     <div className={burguer_class}> </div>    
-                    <div className={burguer_class}></div>           
+                    <div className={burguer_class}> </div>           
                 </div>
             </nav>
             
