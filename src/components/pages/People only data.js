@@ -59,7 +59,8 @@ export default function People() {
             );
             setData(people);
             setLoading(false);
-            console.log(people);
+            console.log(people.name);
+            
         })
         .catch((error) => {
             setError(error);

@@ -39,11 +39,9 @@ return (
 <Html distanceFactor={0.1} >
         <div className={hovered ? "content" : 'hiddentext'} >
         {/* if condition depending on props.children content */}
-        {props.children === 'AEC tech' ? <div>about</div> : null}
-        {props.children === 'metaverse' ? <div>something about metaverse</div> : null}
-        {props.children === 'web3 blockchain' ? <div>something about web3</div> : null}
-        {props.children === 'services' ? <div>something about it</div> : null}
-        {props.children === 'education' ? <div>something about education</div> : null}
+        {props.children === 'LEARN' ? <div>about</div> : null}
+        {props.children === 'JOIN A PROJECT' ? <div>something about metaverse</div> : null}
+        {props.children === 'HIRE US' ? <div>something about web3</div> : null}
         </div>
       </Html>
 </mesh>
@@ -92,23 +90,23 @@ export default function Header() {
         {text}
       </Text>
       
-        <ColorText rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -2]}>AEC tech
+        {/* <ColorText rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -2]}>Projects
         {/* <Html distanceFactor={0.1} >
         <div className="content" >
           hello <br />
           world
         </div>
-      </Html> */}
-        </ColorText>
+      </Html> 
+        </ColorText> */}
         
-       <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -1]}>metaverse 
+       {/* <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, -1]}>services 
       
-</ColorText>
-      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 0]}>web3 blockchain 
+</ColorText> */}
+      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 0]}>LEARN
      </ColorText>
-      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 1]}>services
+      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 1]}>JOIN A PROJECT
      </ColorText>
-      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 2]}>education 
+      <ColorText  rotation={[-Math.PI / 2, 0, Math.PI*2]} position={[-5, -1, 2]}>HIRE US 
      </ColorText> 
       {/** Controls */}
       <OrbitControls
