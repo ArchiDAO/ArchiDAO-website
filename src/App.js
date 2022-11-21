@@ -7,7 +7,7 @@ import './styles.css';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
 import Navbar from './components/Navbar';
-import People from './components/pages/People only data';
+import People from './components/pages/People';
 import ReadRemoteFile from './components/ParseRemote';
 // import Dashboard from './components/pages/Dashboard';
 

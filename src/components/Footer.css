@@ -14,7 +14,7 @@
 
 .footer-items{
     font-family: 'EB Garamond', serif;
-    color: gray;
+    color: lightgray;
     font-size: 1.2em;
     display: flex;
     flex-direction: row;

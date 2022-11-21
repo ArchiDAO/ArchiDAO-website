@@ -3,7 +3,7 @@ import { useTransition } from 'react'
 import { useControls } from 'leva'
 
 import { Canvas } from '@react-three/fiber'
-import { AccumulativeShadows, RandomizedLight, Center, Text3D, Environment, OrbitControls } from '@react-three/drei'
+import { AccumulativeShadows, RandomizedLight, Center, Text3D, Environment, Html, OrbitControls } from '@react-three/drei'
 
 import { usePapaParse } from 'react-papaparse';
 
@@ -67,7 +67,7 @@ const [countries, setCountries] = React.useState([]);
     });
   };
 
-
+  const [hovered, hover] = useState(false)
 
 return (
   <Suspense>
@@ -79,10 +79,19 @@ return (
           <Text3D key={key} position={[0,- Object.keys(profissao).indexOf(key)/5, 0]} 
           fontSize={4} letterSpacing={0} height={Math.log10(profissao[key])+0.5} 
           size={0.2} font="/Bold.json"
-          castShadow >
+          castShadow    onPointerOver={(event) => hover(true)}
+          onPointerOut={(event) => hover(false)} >
           {key}
-          <meshStandardMaterial metalness={1} roughness={0.35} />
+          <meshStandardMaterial metalness={1} roughness={0.25} />
+
+          <Html distanceFactor={15} >
+        <div className={hovered ? "content" : 'hiddentext'} >
+          <h1 style={{fontFamily:'Krona One', fontSize:'8px', transition:'ease-in-out'}}>{profissao[key]}</h1>
+        </div>
+      </Html>
+
             </Text3D>
+            
            ))}</mesh>
     </Center>
         <AccumulativeShadows temporal frames={200} color="purple" colorBlend={0.5} opacity={1} scale={10} alphaTest={0.85}>
