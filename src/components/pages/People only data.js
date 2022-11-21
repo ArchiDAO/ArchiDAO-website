@@ -75,9 +75,7 @@ export default function People() {
         <>
         <div className="people">
             
-            <p className='ppeople' >A 3D tale of who we are.</p>
-            <p className='ppeople' >Join us <a href='https://forms.gle/HcWnT64o79awMsfk9' style={{ color: 'chocolate'  }}>here</a> and become a part of the future.</p>
-            
+           
                 <div className="person">
                 {data.map((person) => (
                     <div className='person__data' key={person.nationality}>

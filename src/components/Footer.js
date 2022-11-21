@@ -8,7 +8,7 @@ export default function Footer()  {
     return(
         <div className="footer">
            
-                <div className='logo-footer'> ARCHIDAO </div>
+                <div className='logo-footer'> <Link to={'../home'} style={{color:'white'}}  > ARCHIDAO </Link></div>
                 <div className='footer-items'>
                     <div>contact &#8594;  
                     <a href="mailto:archidao.io@gmail.com" style={{color:'white'}}  >  email@archidao.io</a></div>

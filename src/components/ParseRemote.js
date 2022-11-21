@@ -84,8 +84,9 @@ return (
           {key}
           <meshStandardMaterial metalness={1} roughness={0.25} />
 
-          <Html distanceFactor={15} >
-        <div className={hovered ? "content" : 'hiddentext'} >
+          <Html distanceFactor={18} >
+        {/* <div className={hovered  ?"content" : 'hiddentext'} > */}
+        <div className="content" >
           <h1 style={{fontFamily:'Krona One', fontSize:'8px', transition:'ease-in-out'}}>{profissao[key]}</h1>
         </div>
       </Html>
