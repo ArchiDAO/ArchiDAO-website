@@ -1,5 +1,6 @@
 import * as csv from 'csvtojson';
 import React, { useState , useEffect} from 'react';
+import Footer from '../Footer.js';
 import './People.css';
 
 
@@ -83,7 +84,7 @@ export default function People() {
                     </div>))}
            </div>
            </div>
-           
+           <Footer/>
            </>
            
            )

@@ -7,11 +7,12 @@
 
 import React from 'react';
 import './About.css';
-// import Footer from './components/Footer';
+import Footer from '../Footer';
 // import Particles from './components/Particles';
 
 export default function About() {
     return (
+        <>
         <div className="about">
         {/* <Particles /> */}
             <div className="about__container">
@@ -32,13 +33,15 @@ export default function About() {
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
                               </p>
                         <div className='particles__container'>
-                        {/* <Particles /> */}
+                       
                         </div>
                     </div>
                 </div>              
             </div>
-        {/* <Footer /> */}
         </div>
+        <Footer />
+
+        </>
     );
     }
 
