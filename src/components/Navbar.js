@@ -39,14 +39,14 @@ export default function Navbar()  {
             <div className={menu_class}> 
                 <div className='menuitems' onClick={updateMenu}>
                
-                     <li><Link style={{color:'white'}} to="/About" >ABOUT</Link></li>
-                     <li><Link style={{color:'white'}}to="/Projects" >PORTFOLIO</Link></li>
+                     <li className='menuItem'><Link style={{color:'white'}} to="/About" >ABOUT</Link></li>
+                     <li className='menuItem'><Link style={{color:'white'}}to="/Projects" >PORTFOLIO</Link></li>
                      
-                    <li><Link style={{color:'white'}} to="/">+ GUILDS</Link></li>
+                    <li className='menuItem'><Link style={{color:'white'}} to="/">+ GUILDS</Link></li>
           
-                    <li><Link style={{color:'white'}} to="/Contact">CONTACT</Link></li>
-                   <li> <Link style={{color:'white'}} to="/People">PEOPLE</Link></li>
-                   <li> <Link style={{color:'white'}} to="/Dashboard">MEMBER AREA</Link></li>
+                    <li className='menuItem'><Link style={{color:'white'}} to="/Contact">CONTACT</Link></li>
+                   <li className='menuItem'> <Link style={{color:'white'}} to="/People">PEOPLE</Link></li>
+                   <li className='menuItem'> <Link style={{color:'white'}} to="/Dashboard">MEMBER AREA</Link></li>
                    <img className="logo" src={Logo} alt="logo" />
                   
                 </div>
