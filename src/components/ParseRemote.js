@@ -3,7 +3,7 @@ import { useTransition } from 'react'
 import { useControls } from 'leva'
 import * as THREE from 'three'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { AccumulativeShadows, RandomizedLight, Center, Text3D, Environment, Html, OrbitControls } from '@react-three/drei'
+import { AccumulativeShadows, RandomizedLight, Center, Text3D, Environment, Html, OrbitControls, MeshDistortMaterial } from '@react-three/drei'
 
 import { usePapaParse } from 'react-papaparse';
 
@@ -87,14 +87,20 @@ return (
       rotation={[-Math.PI / 2, 0, Math.PI*2]} 
       >
          {Object.keys(profissao).map((key) => (
-          <Text3D key={key} position={[0,- Object.keys(profissao).indexOf(key)/5, 0]} 
-          fontSize={4} letterSpacing={0} height={Math.log10(profissao[key])/2+0.3} 
+          <Text3D key={key} position={[0,- Object.keys(profissao).indexOf(key)/4.8, 0]} 
+          fontSize={4} letterSpacing={.01} height={Math.log10(profissao[key])/2+0.3} 
           size={0.2} font="/Bold.json"
           castShadow    onPointerOver={(event) => hover(true)}
-          onPointerOut={(event) => hover(false)} >
+          onPointerOut={(event) => hover(false)} 
+          
+          bevelEnabled
+          bevelSize={0.01}
+          bevelSegments={10}
+          bevelThickness={-0.005}
+          >
           {key}
           <meshStandardMaterial metalness={1} roughness={0.25} />
-
+         {/* <MeshDistortMaterial color={'black'}/> */}
           <Html distanceFactor={10} >
         {/* <div className={hovered  ?"content" : 'hiddentext'} > */}
         <div className="content" >

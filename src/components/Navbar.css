@@ -96,24 +96,26 @@ li::marker{
 .burguer-bar.clicked:nth-child(1){
     transform: rotate(25deg) translate(-0.1em, 0.75em);
     background-color: white;
-    transition: ease-out 0.5s;
+    transition: ease-out 0.2s;
+    height: 2px;
 }
 
 .burguer-bar.clicked:nth-child(2){
     transform: scale(0);
     background-color: white;
-    transition: ease-out 0.5s;
+    transition: ease-out 0.2;
 }
 
 .burguer-bar.clicked:nth-child(3){
     transform: rotate(-25deg) translate(-0.4em, -0.4em);
     background-color: white;
-    transition: ease-out 0.5s;
+    transition: ease-out 0.2s;
+    height: 2px;
 }
 
 .burguer-bar.unclicked {
     transform: rotate(0deg) translate(0, 0);
-    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s;
 }
 
 .logo{
