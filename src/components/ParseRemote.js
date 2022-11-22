@@ -1,12 +1,19 @@
 import React, { Suspense, useState, useEffect } from 'react';
 import { useTransition } from 'react'
 import { useControls } from 'leva'
-
-import { Canvas } from '@react-three/fiber'
+import * as THREE from 'three'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { AccumulativeShadows, RandomizedLight, Center, Text3D, Environment, Html, OrbitControls } from '@react-three/drei'
 
 import { usePapaParse } from 'react-papaparse';
 
+
+
+function Rig({ v = new THREE.Vector3() }) {
+  return useFrame((state) => {
+    state.camera.position.lerp(v.set(state.mouse.x / 2 -14, state.mouse.y / 1-7, 13), 0.01)
+  })
+}
 
 
 
@@ -76,7 +83,9 @@ return (
       <Canvas shadows   camera={{ position: [-5, 3, 5.5], fov: 40  }}>
       <group position={[-1.5, 3, 2.5]}>
       <Center top>
-      <mesh castShadow rotation={[-Math.PI / 2, 0, Math.PI*2]} >
+      <mesh castShadow 
+      rotation={[-Math.PI / 2, 0, Math.PI*2]} 
+      >
          {Object.keys(profissao).map((key) => (
           <Text3D key={key} position={[0,- Object.keys(profissao).indexOf(key)/5, 0]} 
           fontSize={4} letterSpacing={0} height={Math.log10(profissao[key])/2+0.3} 
@@ -103,8 +112,10 @@ return (
       </group>
       <Env />
       <OrbitControls 
-       autoRotateSpeed={0.2} enablePan={false} enableZoom={false} minPolarAngle={Math.PI /10} maxPolarAngle={Math.PI / 4} 
-      />
+      enablePan={false} enableZoom={false} minPolarAngle={Math.PI /4} maxPolarAngle={Math.PI / 4}
+       minAzimuthAngle={-Math.PI / 3} maxAzimuthAngle={Math.PI / 20} />
+           <Rig />
+
     </Canvas> 
 
 </Suspense>
