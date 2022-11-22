@@ -5,26 +5,27 @@
     text-align: center;
     display: flex;
     flex-direction: row; 
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     position:fixed;
     bottom: 30px;
-    left: 80px;
-    width: 95vw;
+    padding-left: 80px;
+    width: 100vw;
 }
 
 .footer-items{
     font-family: 'EB Garamond', serif;
     color: lightgray;
-    font-size: 1.2em;
+    font-size: 1em;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 40%;
     height: 100%;
-    padding: 0px;
+    padding-right: 40px;
     margin: 0px;
+
 
 }
 

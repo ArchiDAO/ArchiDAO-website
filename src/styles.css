@@ -50,10 +50,10 @@ svg {
   font-size: 2px;
   font-family: 'EB Garamond', serif;
   line-height: 2px;
-  position: absolute;
+  position: fixed;
   
   left: -20px;
-  bottom: 7px;
+  bottom: 15px;
   width: 50px;
 
  

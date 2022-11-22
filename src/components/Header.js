@@ -31,7 +31,7 @@ return (
       onClick={(event) => click(!clicked)}
   onPointerOver={(event) => hover(true)}
       onPointerOut={(event) => hover(false)}
-  letterSpacing={0} height={0.02}size={0.4} font="/Inter_Medium_Regular.json" >
+  letterSpacing={0} height={0.04}size={0.5} font="/Inter_Medium_Regular.json" >
     {props.children}
   <meshStandardMaterial  color={hovered ? 'chocolate' : 'black'} />
 
@@ -39,9 +39,9 @@ return (
 <Html distanceFactor={0.1} >
         <div className={hovered ? "content" : 'hiddentext'} >
         {/* if condition depending on props.children content */}
-        {props.children === 'LEARN' ? <div>about</div> : null}
-        {props.children === 'JOIN A PROJECT' ? <div>something about metaverse</div> : null}
-        {props.children === 'HIRE US' ? <div>something about web3</div> : null}
+        {props.children === 'LEARN' ? <div>Select one of the Learning Paths we have available<br/>Improve your skills in AEC Tech</div> : null}
+        {props.children === 'JOIN A PROJECT' ? <div>Choose one of the ongoing projects<br/>or propose a new one for the community</div> : null}
+        {props.children === 'HIRE US' ? <div>Metaverse | Blockchain | AEC Tech <br/> Consulting | 3D Modeling | Game Development </div> : null}
         </div>
       </Html>
 </mesh>
@@ -154,7 +154,7 @@ const Grid = ({ number = 23, lineWidth = 0.026, height = 0.5 }) => (
   // Renders a grid and crosses as instances
   <Instances position={[0, -1.02, 0]}>
     <planeGeometry args={[lineWidth, height]} />
-    <meshBasicMaterial color="#999" />
+    <meshBasicMaterial color="#bbb" />
     {Array.from({ length: number }, (_, y) =>
       Array.from({ length: number }, (_, x) => (
         <group key={x + ':' + y} position={[x * 2 - Math.floor(number / 2) * 2, -0.01, y * 2 - Math.floor(number / 2) * 2]}>
@@ -163,7 +163,7 @@ const Grid = ({ number = 23, lineWidth = 0.026, height = 0.5 }) => (
         </group>
       ))
     )}
-    <gridHelper args={[100, 100, '#bbb', '#bbb']} position={[0, -0.01, 0]} />
+    <gridHelper args={[100, 100, '#ddd', '#ddd']} position={[0, -0.01, 0]} />
   </Instances>
 )
 
