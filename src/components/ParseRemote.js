@@ -87,7 +87,7 @@ return (
           <Html distanceFactor={10} >
         {/* <div className={hovered  ?"content" : 'hiddentext'} > */}
         <div className="content" >
-          <h1 style={{fontFamily:'Krona One', fontSize:'4px', transition:'ease-in-out'}}>{profissao[key]}</h1>
+          <h1 style={{fontFamily:'Krona One', color:'rgb(15,15,15)', fontSize:'4px', transition:'2ms, ease-in-out', zIndez:'-400'}}>{profissao[key]}</h1>
         </div>
       </Html>
 
