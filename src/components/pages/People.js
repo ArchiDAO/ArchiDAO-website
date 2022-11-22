@@ -8,10 +8,7 @@ import PeopleNames from './People only data';
 
 export default function People() {
 
-  const [professionClass, setProfessionClass] = useState('hidden')  //canva-container
-  const [nameClass, setNameClass] = useState('hidden')  //canva-container
-
-  
+    
   
   return(
       <>
@@ -19,14 +16,12 @@ export default function People() {
             
             <p className='ppeople' >A 3D tale of who we are.</p>
                 <p className='ppeople' >Join us <a href='https://forms.gle/HcWnT64o79awMsfk9' style={{ color: 'chocolate'  }}>here</a> and become a part of the future.</p>
-                <p className='ppeople' >Professions </p>
+                <p className='ppeople'>Professions </p>
                 </div>
                  <div className='canva-container'>
                     <ReadRemoteFile/>
                 </div>
-                <div className={nameClass}>
-                    <PeopleNames />
-                </div>
+                
             <Footer />
       </>
   )

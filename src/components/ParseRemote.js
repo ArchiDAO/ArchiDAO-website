@@ -71,23 +71,23 @@ const [countries, setCountries] = React.useState([]);
 
 return (
   <Suspense>
-      <Canvas shadows  camera={{ position: [0, 0, 4.5], fov: 100 }}>
-      <group position={[-2, -0.65, 0]}>
+      <Canvas shadows   camera={{ position: [-5, 3, 5.5], fov: 40  }}>
+      <group position={[-1.5, 3, 2.5]}>
       <Center top>
       <mesh castShadow rotation={[-Math.PI / 2, 0, Math.PI*2]} >
          {Object.keys(profissao).map((key) => (
           <Text3D key={key} position={[0,- Object.keys(profissao).indexOf(key)/5, 0]} 
-          fontSize={4} letterSpacing={0} height={Math.log10(profissao[key])+0.5} 
+          fontSize={4} letterSpacing={0} height={Math.log10(profissao[key])/2+0.3} 
           size={0.2} font="/Bold.json"
           castShadow    onPointerOver={(event) => hover(true)}
           onPointerOut={(event) => hover(false)} >
           {key}
           <meshStandardMaterial metalness={1} roughness={0.25} />
 
-          <Html distanceFactor={18} >
+          <Html distanceFactor={10} >
         {/* <div className={hovered  ?"content" : 'hiddentext'} > */}
         <div className="content" >
-          <h1 style={{fontFamily:'Krona One', fontSize:'8px', transition:'ease-in-out'}}>{profissao[key]}</h1>
+          <h1 style={{fontFamily:'Krona One', fontSize:'4px', transition:'ease-in-out'}}>{profissao[key]}</h1>
         </div>
       </Html>
 
@@ -101,7 +101,7 @@ return (
       </group>
       <Env />
       <OrbitControls 
-      autoRotate autoRotateSpeed={0.2} enablePan={true} enableZoom={true} minPolarAngle={Math.PI /10} maxPolarAngle={Math.PI / 1} 
+       autoRotateSpeed={0.2} enablePan={false} enableZoom={false} minPolarAngle={Math.PI /10} maxPolarAngle={Math.PI / 4} 
       />
     </Canvas> 
 
