@@ -8,6 +8,8 @@ import { AccumulativeShadows, RandomizedLight, Center, Text3D, Environment, Html
 import { usePapaParse } from 'react-papaparse';
 
 
+
+
 export default function ReadRemoteFile() {
   const { readRemoteFile } = usePapaParse();
   const [people, setPeople] = React.useState([]);
@@ -87,7 +89,7 @@ return (
           <Html distanceFactor={10} >
         {/* <div className={hovered  ?"content" : 'hiddentext'} > */}
         <div className="content" >
-          <h1 style={{fontFamily:'Krona One', color:'rgb(15,15,15)', fontSize:'4px', transition:'2ms, ease-in-out', zIndez:'-400'}}>{profissao[key]}</h1>
+          <h1 style={{fontFamily:'Krona One', color:'rgb(15,15,15)', fontSize:'4px', zIndez:'-400'}}>{profissao[key]}</h1>
         </div>
       </Html>
 

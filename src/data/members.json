@@ -1,0 +1,58 @@
+[
+    {
+        "text": "Babi",
+        "skills": 7,
+        "country": "BRA",
+        "city": "Sao Paulo",
+        "startLat": "-23.5475000",
+        "startLng": "-46.6361100"
+    },
+    {
+        "text": "Mayur",
+        "skills": 10,
+        "country": "USA",
+        "city": "Chicago",
+        "startLat": "41.8500300",
+        "startLng": "-87.6500500"
+    },
+    {
+        "text": "Simon P",
+        "skills": 2,
+        "country": "USA",
+        "city": "Santa Barbara",
+        "startLat": "34.4208300",
+        "startLng": "-119.6981900"
+    },
+    {
+        "text": "Theo",
+        "skills": 12,
+        "country": "GBR",
+        "city": "London",
+        "startLat": "51.5085300",
+        "startLng": "-0.1257400"
+    },
+    {
+        "text": "Jiri",
+        "skills": 8,
+        "country": "CZE",
+        "city": "Prague",
+        "startLat": "50.0880400",
+        "startLng": "14.4207600"
+    },
+    {
+        "text": "Kabir",
+        "skills": 15,
+        "country": "IND",
+        "city": "Bhilai",
+        "startLat": "21.2091900",
+        "startLng": "81.4285000"
+    },
+    {
+        "text": "Shree",
+        "skills": 20,
+        "country": "IND",
+        "city": "Bhilai",
+        "startLat": "21.2091900",
+        "startLng": "81.4285000"
+    }
+]

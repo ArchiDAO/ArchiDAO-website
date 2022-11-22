@@ -9,6 +9,7 @@ import About from './components/pages/About';
 import Navbar from './components/Navbar';
 import People from './components/pages/People';
 import ReadRemoteFile from './components/ParseRemote';
+import Locations from './components/pages/Locations';
 // import Dashboard from './components/pages/Dashboard';
 
 
@@ -27,6 +28,7 @@ function App() {
                   <Route exact path="/about" element={<About/>}/>
                   <Route exact path="/people" element={<People/>}/>
                   <Route exact path="/read" element={<ReadRemoteFile/>}/>
+                  <Route exact path="/locations" element={<Locations/>}/>
                 </Routes>          
             </Router>
             
