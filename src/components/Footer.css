@@ -1,5 +1,5 @@
 .footer{
-    background-color: inherit;
+    background-color: transparent;
     color: #fff;
     padding: 0px;
     text-align: center;
@@ -13,16 +13,31 @@
     width: 100vw;
 }
 
+.footer-top{
+    background-color: transparent;
+    padding: 0px;
+    text-align: center;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    align-items: left;
+    padding-top: 50px;
+    padding-left: 60px;
+    padding-bottom: 20px;
+    width: 100vw;
+    height: 100%;
+}
+
 .footer-items{
     font-family: 'EB Garamond', serif;
-    color: lightgray;
+    color: gray;
     font-size: 1em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     width: 40%;
-    height: 100%;
+    height: 40px;
     padding-right: 40px;
     margin: 0px;
     text-decoration: none;
@@ -30,8 +45,42 @@
 
 }
 
+.footer-items-top{
+    font-family: 'EB Garamond', serif;
+    color: gray;
+    font-size: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 95vw;
+    height: 40px;
+    padding-right: 40px;
+    margin: 0px;
+    text-decoration: none;
+
+
+}
+
+.footer-item-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 30%;
+
+}
+
 .logo-footer{
     font-family: 'Krona One', sans-serif;
+    text-align: left;
+}
+
+
+.logo-footer-top{
+    font-family: 'Krona One', sans-serif;
+    text-align: left;
+    font-size: 1.5em;
+    color: #fff;
 }
 
 .footer-item{
