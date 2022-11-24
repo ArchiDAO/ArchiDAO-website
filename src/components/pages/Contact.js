@@ -78,7 +78,7 @@ export default function Contact() {
         minPolarAngle={Math.PI / 3}
         maxPolarAngle={Math.PI / 3}
       />
-          <Text config={config} rotation={[0, 1.1, -2.25]} position={[-1, -1, 0]}>
+          <Text config={config} rotation={[0, 1.1, -2.1]} position={[-1, -1, 0]}>
             {text}
           </Text>
           <Environment resolution={32}>

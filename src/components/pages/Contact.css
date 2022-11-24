@@ -21,12 +21,14 @@
     padding:5%;
     width: 50%;
     bottom:80px;
-    right: 60px;
-    top:50px;
+    right: 80px;
+    top:120px;
     color:white;
     background-color: #000000;
     font-family: 'EB Garamond', serif;
     font-size:1em;
+    /* background blend mode */
+    
 
 }
 
@@ -45,9 +47,7 @@
 }
 
 /* style .form-areas buttons */
-.form-area {
-   
-}
+
 
 .form-areas * {
     border: white 1px solid;

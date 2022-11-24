@@ -67,8 +67,9 @@ p{
     font-size: 20px;
 }
 
-.particles__container{
+.partners{
  /* width equals .about__text1 */
- width: 300xp;
-    background-color: white;
+ flex:1;
+    background-color: rgba(92, 92, 92, 0.384);
+    padding: 20px;
 }
