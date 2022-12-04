@@ -150,18 +150,18 @@ export default function Dashboard() {
        
         {/* <Footer2 /> */}
     <div className='ideas_dash'>
-        <h1>Ideas</h1>
-        <div>Account address: {account}</div>
-        <ol>
+        <h1 style={{width:"100%"}}>Ideas</h1>
+        <div >Account address: {account}</div>
+        <ol className='ideagroup_dash'>
             {
                 Object.keys(ideas).map((_, index) => (
-                    <div>
+                    <div className='idea_dash'>
                         <h4>Idea: {ideas[index].name}</h4>
-                        <span><b>What the DAO/people will gain from the project?</b> {ideas[index].gain}</span><br/>
-                        <span><b>How much time the manager is willing to put in the project?</b> {ideas[index].pmTimeEstimate}</span><br/>
-                        <span><b>What kind of knowledge would be necessary for internal support?</b> {ideas[index].internalSupportNeed}</span><br/>
-                        <span><b>How much time from the internal support would be necessary?</b> {ideas[index].internalSupportHours}</span><br/>
-                        <span><b>What kind of people would be necessary as a team, and how many hours?</b> {ideas[index].teamNeeded}</span><br/>
+                        <span><b>What the DAO/people will gain from the project?</b> {ideas[index].gain}</span>
+                        <span><b>How much time the manager is willing to put in the project?</b> {ideas[index].pmTimeEstimate}</span>
+                        <span><b>What kind of knowledge would be necessary for internal support?</b> {ideas[index].internalSupportNeed}</span>
+                        <span><b>How much time from the internal support would be necessary?</b> {ideas[index].internalSupportHours}</span>
+                        <span><b>What kind of people would be necessary as a team, and how many hours?</b> {ideas[index].teamNeeded}</span>
                         <span><b>How much time from the team would be necessary?</b> {ideas[index].teamHours}</span>
                     </div>
                 ))
