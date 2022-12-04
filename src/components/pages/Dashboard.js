@@ -20,7 +20,7 @@ export default function Dashboard() {
         const counter = await ideaContract.methods.count().call();
         for (let i=1; i<=counter; i++){
           const idea = await ideaContract.methods.ideas(i).call();
-          setIdeas(ideas => [...ideas, idea]);
+          setIdeas(ideas => [idea, ...ideas ]);
         }
       }
       load();
