@@ -68,7 +68,6 @@ p{
 }
 
 .partners{
- /* width equals .about__text1 */
  flex:1;
     background-color: rgba(92, 92, 92, 0.384);
     padding: 20px;

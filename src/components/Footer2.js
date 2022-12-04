@@ -8,10 +8,10 @@ export default function Footer2()  {
     return(
         <div className="footer-top">
            
-                <div className='logo-footer-top' > <Link to={'../home'} style={{color:'white', fontWeight:'bold'}} > ARCHIDAO </Link></div>
+                <div className='logo-footer-top' > <Link to={'../home'} style={{color:'black', fontWeight:'bold'}} > ARCHIDAO </Link></div>
                 <div className='footer-items-top'>
                     <div className='footer-contact-top'>
-                    <div style={{color:'white'}}>contact &#8594;  
+                    <div style={{color:'black'}}>contact &#8594;  
                     <a  href="mailto:archidao.io@gmail.com" >  email@archidao.io</a></div></div>
                   
                     <div className='footer-item-top'>

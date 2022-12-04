@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css';
 // import Navbar from './components/Navbar';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
@@ -10,14 +10,17 @@ import Navbar from './components/Navbar';
 import People from './components/pages/People';
 import ReadRemoteFile from './components/ParseRemote';
 import Locations from './components/pages/Locations';
+import Dashboard from './components/pages/Dashboard';
 import Contact from './components/pages/Contact';
-// import Dashboard from './components/pages/Dashboard';
+
+
+
 
 
 
 function App() {
+ 
 
-  
   return (
 
       <>
@@ -31,6 +34,7 @@ function App() {
                   <Route exact path="/contact" element={<Contact/>}/>
                   <Route exact path="/read" element={<ReadRemoteFile/>}/>
                   <Route exact path="/locations" element={<Locations/>}/>
+                  <Route exact path="/dashboard" element={<Dashboard/>}/>
                 </Routes>          
             </Router>
             

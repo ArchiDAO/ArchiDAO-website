@@ -12,7 +12,7 @@ import { MeshRefractionMaterial } from '../../shaders/MeshRefractionMaterial'
 function Rig({ v = new THREE.Vector3() }) {
   return useFrame((state) => {
     state.camera.position.lerp(v.set(state.mouse.x / 5 + 2, state.mouse.y / 5, 2), 0.05)
-    console.log(state.camera.position)
+   
   })
 }
 
