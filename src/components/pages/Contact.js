@@ -42,7 +42,7 @@ export default function Contact() {
       return (
         
   <div className="contact-container">
-      <div className="contact-hero"> Have a project? <br/> We would love to help. </div>
+      <div className="contact-hero"> Have a project? <br/> Tell us more! </div>
      
       <div className='form-container'>
         I'm interested in:

@@ -27,9 +27,12 @@ return (
   <mesh {...props}>
   <Text3D 
   // {...props}
-   scale={clicked ? 1.5 : 1}
-      onClick={(event) => click(!clicked)}
-  onPointerOver={(event) => hover(true)}
+  //  scale={clicked ? 1.5 : 1}
+   scale={1}
+      // onClick={(event) => click(!clicked)}
+      //create onClick route to the page Learn
+      onClick={(event) => window.location.href = '/Learn'}
+        onPointerOver={(event) => hover(true)}
       onPointerOut={(event) => hover(false)}
   letterSpacing={0} height={0.04}size={0.5} font="/Inter_Medium_Regular.json" >
     {props.children}

@@ -45,7 +45,7 @@ export default function Navbar()  {
                     <li className='menuItem'><Link style={{color:'white'}} to="/">+ GUILDS</Link></li>
           
                     <li className='menuItem'><Link style={{color:'white'}} to="/Contact">CONTACT</Link></li>
-                   <li className='menuItem'> <Link style={{color:'white'}} to="/People">PEOPLE</Link></li>
+                   <li className='menuItem'> <Link style={{color:'white'}} to="/People">WE</Link></li>
                    <li className='menuItem'> <Link style={{color:'white'}} to="/Dashboard">MEMBER AREA</Link></li>
                    <img className="logo" src={Logo} alt="logo" />
                   

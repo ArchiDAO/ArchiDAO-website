@@ -1,0 +1,72 @@
+.learn__text1{
+    font-size: 20px;
+    font-family: 'EB Garamond', serif;
+    letter-spacing: 0.1em;
+    color: white;
+    margin-bottom: 0em;
+    margin-top: 0em;
+    margin-left: 0em;
+    margin-right: 0em;
+    padding-left: 0px;
+    padding-right: 100px;
+    padding-top: 26px;
+    color: white;
+    width: 40%;
+}
+
+.learn__subtitle{
+    position: relative;
+    font-size: 8vw;
+    font-family: 'Krona One', sans-serif;
+    color: white;
+    margin-right:0px;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+
+}
+
+.learn_second__row{
+    display: flex;
+  flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: top;
+
+}
+
+.youtube__card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    
+    font-family: "Inter", serif;
+    font-size: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.youtube__card__title{
+    font-family: "Krona One", sans-serif;
+    padding-bottom: 20px;
+    text-align: left;
+    padding-top: 40px;
+}
+
+.youtube__card__description{
+    font-family: "EB Garamond", serif;
+    font-size: 18px;
+    padding-top: 10px;
+}
+
+.youtube_thumb{
+    /* height: 200px; */
+
+    border-radius: 10px;
+}
