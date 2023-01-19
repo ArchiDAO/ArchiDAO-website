@@ -5,12 +5,35 @@
 //3D
 //FOOTER
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './About.css';
 import Footer from '../Footer';
+import Barista from '../images/cryptobarista.png';
+import Bitscrunch from '../images/bitscrunch.png';
 // import Particles from './components/Particles';
 
+
+
 export default function About() {
+
+    useEffect(() => {
+        const interval = setInterval(changeImage, 2000);
+        return () => clearInterval(interval);
+      }, [changeImage]);
+
+const [currentImage, setCurrentImage] = useState(1);
+
+const changeImage = () => {
+    setCurrentImage(currentImage === 2 ? 1 : currentImage + 1);
+  }
+
+const images = [
+    { id: 1, src: Barista },
+    { id: 2, src: Bitscrunch }  ];
+
+  const currentSrc = images.find(img => img.id === currentImage).src;
+
+
     return (
         <>
         <div className="about">
@@ -29,12 +52,10 @@ ArchiDAO is focused on developing web3 integrated solutions in metaverse and blo
                     </div>
                     <div className='second__row'>
                         <p className="about__text2">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                              </p>
+                        We are a group of architects, engineers, developers, and designers who are passionate about the future of the AEC industry. We are building a community of like-minded individuals who are interested in the future of the AEC industry and are willing to contribute to the development of the industry.
+                              <br/> <br/> Some of our partners are Futurly, Bitscrunch, Crypto Barista, CityDAO and CabinDAO.</p>
                         <div className='partners'>
-                       Partners placeholder
+                        <img src={currentSrc} alt="Carousel image" /> 
                         </div>
                     </div>
                 </div>              
