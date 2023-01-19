@@ -31,7 +31,12 @@ return (
    scale={1}
       // onClick={(event) => click(!clicked)}
       //create onClick route to the page Learn
-      onClick={(event) => window.location.href = '/Learn'}
+      onClick={(event) => {
+        if ( props.children === 'LEARN' ) { window.location.href = '/Learn'}
+        if ( props.children === 'JOIN A PROJECT' ) { window.location.href = "https://discord.gg/rVR4YAmCGj"}
+        if ( props.children === 'HIRE US' ) { window.location.href = '/Contact'}
+        
+      }}
         onPointerOver={(event) => hover(true)}
       onPointerOut={(event) => hover(false)}
   letterSpacing={0} height={0.04}size={0.5} font="/Inter_Medium_Regular.json" >
