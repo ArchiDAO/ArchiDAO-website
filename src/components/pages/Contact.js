@@ -8,7 +8,8 @@ import { Canvas, useFrame,  useLoader } from '@react-three/fiber'
 import { useFBO, Center, Text3D, Instance, Instances, Environment, Lightformer, OrbitControls, RandomizedLight, AccumulativeShadows, Html, MeshDistortMaterial } from '@react-three/drei'
 import { useControls, button } from 'leva'
 import { MeshRefractionMaterial } from '../../shaders/MeshRefractionMaterial'
-import sendgrid from '@sendgrid/mail';
+// import sendgrid from '@sendgrid/mail';
+import emailjs from '@emailjs/browser';
 
 
 function Rig({ v = new THREE.Vector3() }) {
@@ -21,7 +22,7 @@ function Rig({ v = new THREE.Vector3() }) {
 
 export default function Contact() {
 
-  sendgrid.setApiKey = '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'
+  // sendgrid.setApiKey = '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'
 
   const [selectedArea, setSelectedArea] = useState('General');
   const [name, setName] = useState('');
@@ -30,10 +31,13 @@ export default function Contact() {
 
 
 
-  function handleAreaClick(event) {
-    setSelectedArea(event.target.innerText);
+  // function handleAreaClick(event) {
+  //   e.preventDefault();
+  //   setSelectedArea(event.target.innerText);
+  // }
+  function handleAreaChange(event) {
+    setSelectedArea(event.target.value);
   }
-
 
 function handleNameChange(event) {
   setName(event.target.value);
@@ -49,49 +53,31 @@ function handleMessageChange(event) {
 
 
 const msg = {
-  to: 'youremail@example.com',
+  to: 'archidao.io@gmail.com',
   from: 'noreply@example.com',
   subject: 'Form Submission',
   text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}\nArea of Interest: ${selectedArea}`
 };
 
+const formRef = useRef(null);
 
+const sendEmail = (e) => {
+  e.preventDefault(); 
+  alert (`Thank you for your message, ${name}! Please complete the process with your local email software.`);
+  //send email with mailto
+  window.location.href = `mailto:archidao.io@gmail.com?subject=Form Submission&body=Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage: ${message}%0D%0AArea of Interest: ${selectedArea}`;
+  
+  // emailjs.sendForm('service_ydm94uw', 'template_zyqs2qq',  formRef.current, 'lkkcCA2M2tQVpUcr2')
+  //   .then((result) => {
+  //     alert(`Thank you for your message, ${name}!`);
+  //   }, (error) => {
+  //     console.log(error.text);
+  //   });
+};
 
 function handleSendClick(event) {
   
   event.preventDefault();
-  sendgrid.send(msg);
-
-  // alert(`Thank you for your message, ${name}!`);
-  // fetch('https://api.sendgrid.com/v3/mail/send', {
-  //   mode: 'no-cors',
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer `
-  //   },
-  //   body: JSON.stringify({
-  //     personalizations: [{
-  //       to: [{ email: 'archidao.io@gmail.com' }],
-  //       subject: `Form Submission - ${selectedArea}`
-  //     }],
-  //     from: { email: 'noreply@example.com' },
-  //     content: [{
-  //       type: 'text/plain',
-  //       value: `Name: ${name}\nEmail: ${email}\nMessage: ${message}\nArea of Interest: ${selectedArea}`
-  //     }]
-  //   })
-  // })
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     // Handle success
-  //     console.log('Success', data);
-  //   })
-  //   .catch(error => {
-  //     // Handle error
-  //     console.error('Error', error);
-  //   });
-
 }
 
     const { autoRotate, text, shadow, ...config } = useControls({
@@ -119,24 +105,60 @@ function handleSendClick(event) {
         
   <div className="contact-container">
       <div className="contact-hero"> Have a project? <br/> Tell us more! </div>
-     
-      <div className='form-container'>
-        I'm interested in:
-        <div className='form-areas'>
-          <button onClick={handleAreaClick} >Metaverse</button>
-          <button onClick={handleAreaClick} >Blockchain</button>
-          <button onClick={handleAreaClick} >Web3</button>
-          <button onClick={handleAreaClick} >Digital Fabrication</button>
-          <button onClick={handleAreaClick} >AI</button>
-          <button onClick={handleAreaClick} >Design</button>
-        </div>
-        <div className='form-inputs'>
-          <div className='form-input'> <input type="text" placeholder="Name" onChange={handleNameChange} /> </div>
-          <div className='form-input'> <input type="text" placeholder="Email" onChange={handleEmailChange} /> </div>
-          <div className='form-input'> <input type="text" placeholder="Tell us about your project" onChange={handleMessageChange} /> </div>
-          </div>
-          <button className='form-button' onClick={handleSendClick} >SEND</button>
-      </div>
+
+
+
+      {/* <form id="form" ref={formRef} >
+  <div class="field">
+    <label for="from_name">from_name</label>
+    <input type="text" name="from_name" id="from_name"/>
+  </div>
+  <div class="field">
+    <label for="name">name</label>
+    <input type="text" name="name" id="name"/>
+  </div>
+  <div class="field">
+    <label for="message">message</label>
+    <input type="text" name="message" id="message"/>
+  </div>
+  <div class="field">
+    <label for="selectedArea">selectedArea</label>
+    <input type="text" name="selectedArea" id="selectedArea"/>
+  </div>
+  <div class="field">
+    <label for="reply_to">reply_to</label>
+    <input type="text" name="reply_to" id="reply_to"/>
+  </div>
+
+  <input type="submit" id="button" value="Send Email" />
+</form> */}
+
+
+
+
+
+
+      <form ref={formRef} id='form' className='form-container' onSubmit={sendEmail}>
+    <div> I'm interested in:
+        
+          {/*<div className='form-areas'>
+           <button type='select' onClick={handleAreaClick} >Metaverse</button>
+          <button type='select' onClick={handleAreaClick} >Blockchain</button>
+          <button type='select'onClick={handleAreaClick} >Web3</button>
+          <button type='select'onClick={handleAreaClick} >Digital Fabrication</button>
+          <button type='select'onClick={handleAreaClick} >AI</button>
+          <button type='select'onClick={handleAreaClick} >Design</button>  </div>*/}
+          
+       
+    </div>
+    <div className='form-inputs'>
+    <div className='form-input'> <input type="text" placeholder="Filed of project" name="area" onChange={handleAreaChange} /> </div>
+      <div className='form-input'> <input type="text" placeholder="Name" name="user_name" onChange={handleNameChange} /> </div>
+      <div className='form-input'> <input type="text" placeholder="Email" name="user_email" onChange={handleEmailChange} /> </div>
+      <div className='form-input'> <input type="text" placeholder="Tell us about your project" name="message" onChange={handleMessageChange} /> </div>
+    </div>
+    <button className='form-button' type="submit" >SEND</button>
+  </form>
 
       <div className='canvas-contact'>
         <Suspense fallback={null} >
