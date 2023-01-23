@@ -2,6 +2,9 @@ import React from 'react';
 import './Learn.css';
 import Footer from '../Footer';
 // import Particles from './components/Particles';
+import decentraland from '../images/decentraland.jpeg';
+import mona from '../images/mona.jpg';
+import mozilla from '../images/mozilla.jpg';
 
 export default function Learn() {
     return (
@@ -29,7 +32,7 @@ export default function Learn() {
                                 <div className='youtube__card__link'>
                                 {/* embbed thumbnail for https://www.youtube.com/watch?v=FDmidiL0W4s */}
                                 <a href="https://www.youtube.com/watch?v=FDmidiL0W4s">
-                                    <img className='youtube_thumb' src="https://i.ytimg.com/an_webp/FDmidiL0W4s/mqdefault_6s.webp?du=3000&sqp=CO-PjZ0G&rs=AOn4CLAgtjTKyMdZX7UlEffPD7THlpEtFw" alt="Thumbnail do vídeo do YouTube" />
+                                    <img className='youtube_thumb' src={decentraland} alt="Thumbnail do vídeo do YouTube" />
                                 </a>
                                 </div>
                                 <div className='youtube__card__description'>A full Decentraland Metaverse Workshop</div>
@@ -39,7 +42,7 @@ export default function Learn() {
                                 <div className='youtube__card__link'>
                                 {/* embbed thumbnail for https://www.youtube.com/watch?v=FDmidiL0W4s */}
                                 <a href="https://www.youtube.com/watch?v=a91eSabwZ6E">
-                                    <img className='youtube_thumb' src="https://i.ytimg.com/an_webp/a91eSabwZ6E/mqdefault_6s.webp?du=3000&sqp=CO3ajZ0G&rs=AOn4CLDwOWCp48p40iNaoj8KaRiHJy1pFA" alt="Thumbnail do vídeo do YouTube" />
+                                    <img className='youtube_thumb' src={mozilla} alt="Thumbnail do vídeo do YouTube" />
                                 </a>
                                 </div>
                                 <div className='youtube__card__description'>Mozilla Hubs: Create your own open source Metaverse space</div>
@@ -51,7 +54,7 @@ export default function Learn() {
                                 <div className='youtube__card__link'>
                                 {/* embbed thumbnail for https://www.youtube.com/watch?v=FDmidiL0W4s */}
                                 <a href="https://www.youtube.com/watch?v=JW0YriVBDB8">
-                                    <img className='youtube_thumb' src="https://i.ytimg.com/an_webp/JW0YriVBDB8/mqdefault_6s.webp?du=3000&sqp=COuijZ0G&rs=AOn4CLDSU-GhSQtqjh2oWLVMZKd9PP797A" alt="Thumbnail do vídeo do YouTube" />
+                                    <img className='youtube_thumb' src={mona} alt="Thumbnail do vídeo do YouTube" />
                                 </a>
                                 </div>
                                 <div className='youtube__card__description'>Mona Metaverse Crash Course</div>
