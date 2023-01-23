@@ -3,7 +3,7 @@ import React, { useState , useEffect} from 'react';
 import ReadRemoteFile from '../ParseRemote';
 import Footer from "../Footer"
 import './People.css';
-import PeopleNames from './People only data';
+// import PeopleNames from './People only data';
 import {Link} from 'react-router-dom';
 
 
