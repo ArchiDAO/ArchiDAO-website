@@ -3,6 +3,7 @@ import Footer from '../Footer';
 import { Html } from '@react-three/drei';
  import Earth from '../Earth';
  import {Link} from 'react-router-dom';
+ import './People.css';
 
 
 
