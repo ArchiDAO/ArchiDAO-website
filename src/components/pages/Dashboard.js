@@ -15,14 +15,17 @@ function Dashboard() {
         const account = handleAccountsChanged(accounts);
         const signer = provider.getSigner();
 
+        setProvider(provider);
         setAddress(account);
         setSigner(signer);
+        getContract();
         console.log(account);
     }
 
     const handleAccountsChanged = (accounts) => {
         if (accounts.length === 0 ) {
             console.log("Please connect to metamask")
+
         } else {
             window.ethereum.on("accountsChanged", () => { window.location.reload() });
             return accounts[0];
@@ -49,38 +52,28 @@ function Dashboard() {
             provider
           )
 
-        // setProvider(provider)
         setContract(contract);
     }
 
     useEffect(() => {
         ( async () => {
 
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            setProvider(provider);
+            connect()
 
-            if(provider) {
-                getContract();
+            if(provider && signer && contract) {
+                console.log('Provider, Signer and Contract loaded')
             }
-
-            const getName = async () => {
-                const name = await contract.name();
-                console.log(name)
-                setName(name);
-            }
-            getName();
-
-            const getSymbol = async () => {
-                const symbol = await contract.symbol();
-                console.log(symbol)
-                setSymbol(symbol);
-            }
-            getSymbol();
-
+            
         })()
-
+       
     }, [])
 
+    const getName = async () => {
+        console.log(contract)
+        const name = await contract.name();
+        console.log(name)
+        setName(name);
+    };
 
     return (
         <div>
