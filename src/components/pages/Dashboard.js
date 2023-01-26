@@ -62,6 +62,7 @@ function Dashboard() {
 
             if(provider && signer && contract) {
                 console.log('Provider, Signer and Contract loaded')
+                console.log('secondary branch')
             }
             
         })()
