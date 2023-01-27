@@ -1,91 +1,106 @@
-import { ethers } from "ethers";
-import { useState, useEffect } from 'react';
+import { Alchemy, Network, Wallet, Utils } from 'alchemy-sdk';
+import { ethers } from 'ethers';
+import { useEffect, useState } from 'react';
+
+import './Dashboard.css';
+
+// Refer to the README doc for more information about using API
+// keys in client-side code. You should never do this in production
+// level code.
+const settings = {
+  apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
+  network: Network.ETH_GOERLI,
+};
+
+
+// You can read more about the packages here:
+//   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
+const alchemy = new Alchemy(settings);
+
+const network = "goerli";
+const contractAddress = "0x7EaEd8E4b176c683CA1173506Df334Fa5eDFea6b";
+const contractABI = [
+    "function mint()",
+    "function updateMemberSkills(uint tokenId, uint _skill_1, uint _skill_2) public",
+    "function getTokenURI(uint256 tokenId) public view returns (string memory)",
+    "function memberSkillsStructMap(address memberAddress) public view returns(tuple(uint256 memberId, uint256 skill_1, uint256 skill_2, uint256 skill_3, uint256 skill_4, uint256 skill_5, uint256 skill_6, uint256 skill_7, uint256 skill_8, uint256 skill_8, uint256 skill_9, uint256 skill_10, unit256 projectsCompleted))",
+    "function name() view returns (string memory)",
+    "function ownerOf(uint256 tokenId) public view returns (string memory)",
+    "function symbol() public view returns(string memory)",
+    // "function tokenURI(uint256 tokenId) public view returns (string memory)"
+];
+
+
+// Provider
+const alchemyProvider = new ethers.providers.AlchemyProvider(network, process.env.REACT_APP_ALCHEMY_API_KEY);
+// console.log(alchemyProvider)
+//contract
+const archiDaoContractInstance = new ethers.Contract(contractAddress, contractABI, alchemyProvider);
 
 function Dashboard() {
-    const [address, setAddress] = useState('0x...')
-    const [provider, setProvider] = useState();
-    const [signer, setSigner] = useState('');
-    const [contract, setContract] = useState('');
-    const [name, setName] = useState('');
-    const [symbol, setSymbol] = useState('');
+  const [blockNumber, setBlockNumber] = useState();
+  const [contractName, setContractName] = useState();
+  const [symbol, setSymbol] = useState('');
+  const [walletAddress, setWalletAddress] = useState('0x...')
+  const [walletSigner, setWalletSigner] = useState('');
 
-    const connect = async () => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum); 
-        const accounts = await provider.send("eth_requestAccounts", []); 
-        const account = handleAccountsChanged(accounts);
-        const signer = provider.getSigner();
-
-        setProvider(provider);
-        setAddress(account);
-        setSigner(signer);
-        getContract();
-        console.log(account);
+  useEffect(() => {
+    async function getBlockNumber() {
+      setBlockNumber(await alchemy.core.getBlockNumber());
     }
+    getBlockNumber();
 
-    const handleAccountsChanged = (accounts) => {
-        if (accounts.length === 0 ) {
-            console.log("Please connect to metamask")
-
-        } else {
-            window.ethereum.on("accountsChanged", () => { window.location.reload() });
-            return accounts[0];
-        }
+    async function getContractName() {
+        setContractName(await archiDaoContractInstance.name())
     }
+    getContractName()
 
-    const getContract = () => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum  || 'http://localhost:8545');
-        const contractAddress = "0x7377ABAb913F1320397ed33FD328642e668b30bb" 
-        const contractABI = [
-            "function mint()",
-            "function updateMemberSkills(uint tokenId, uint _skill_1, uint _skill_2) public",
-            "function getTokenURI(uint256 tokenId) public view returns (string memory)",
-            "function memberSkillsStructMap(address memberAddress) public view returns(tuple(uint256 memberId, uint256 skill_1, uint256 skill_2, uint256 skill_3, uint256 skill_4, uint256 skill_5, uint256 skill_6, uint256 skill_7, uint256 skill_8, uint256 skill_8, uint256 skill_9, uint256 skill_10, unit256 projectsCompleted))",
-            "function name() public view returns (string memory)",
-            "function ownerOf(uint256 tokenId) public view returns (string memory)",
-            "function symbol() public view returns(string memory)",
-            "function tokenURI(uint256 tokenId) public view returns (string memory)"
-        ];
-
-        let contract = new ethers.Contract(
-            contractAddress,
-            contractABI,
-            provider
-          )
-
-        setContract(contract);
+    async function getContractSymbol() {
+        setSymbol(await archiDaoContractInstance.symbol())
     }
+    getContractSymbol()
 
-    useEffect(() => {
-        ( async () => {
+    // async function getTokenURI() {
+    //     console.log(await archiDaoContractInstance.getTokenURI(1))
+    // }
+    // getTokenURI()
 
-            connect()
+  });
 
-            if(provider && signer && contract) {
-                console.log('Provider, Signer and Contract loaded')
-                console.log('secondary branch')
-            }
-            
-        })()
-       
-    }, [])
+  const connectMetamask = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum); 
+    const accounts = await provider.send("eth_requestAccounts", []); 
+    const account = handleAccountsChanged(accounts);
+    const signer = provider.getSigner();
 
-    const getName = async () => {
-        console.log(contract)
-        const name = await contract.name();
-        console.log(name)
-        setName(name);
-    };
+    setWalletAddress(account);
+    setWalletSigner(signer);
 
-    return (
-        <div>
-            <div>ArchiDAO NFT Dashboard</div>
-            <div>Connected Address: {address}</div>
-            <button onClick={connect}>Connect Wallet</button>
-            <div>NFT Name: {name}</div>
-            <div>NFT Symbol: {symbol}</div>
+    // async function getMemberSkillsStructMap() {
+    //     console.log(await archiDaoContractInstance.memberSkillsStructMap('0x04Ed8A52c9D99eB0925632273Ef30c5dbE0823dC'))
+    // }
+    // getMemberSkillsStructMap()
+  }
 
-        </div>
-    )
+  const handleAccountsChanged = (accounts) => {
+    if (accounts.length === 0 ) {
+        console.log("Please connect to metamask")
+
+    } else {
+        window.ethereum.on("accountsChanged", () => { window.location.reload() });
+        return accounts[0];
+    }
+}
+
+  return (
+    <div className="App">
+        <div>Block Number: {blockNumber}</div>
+        <div>Contract Name: {contractName}</div>
+        <div>Contract Symbol: {symbol}</div>
+        <button onClick={connectMetamask}>Connect Wallet</button>
+        <div>Wallet Address: {walletAddress} </div>
+    </div>
+    );
 }
 
 export default Dashboard;
