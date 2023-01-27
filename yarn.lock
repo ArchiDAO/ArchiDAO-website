@@ -1332,7 +1332,7 @@
   dependencies:
     "@ethersproject/bignumber" "^5.7.0"
 
-"@ethersproject/contracts@5.7.0":
+"@ethersproject/contracts@^5.7.0", "@ethersproject/contracts@5.7.0":
   "integrity" "sha512-5GJbzEU3X+d33CdfPhcyS+z8MzsTrBGk/sc+G+59+tPa9yFkl6HQ9D6L0QMgNTA9q8dT0XKxxkyp883XsQvbbg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/contracts/-/contracts-5.7.0.tgz"
   "version" "5.7.0"
@@ -1435,7 +1435,7 @@
   dependencies:
     "@ethersproject/logger" "^5.7.0"
 
-"@ethersproject/providers@5.7.2":
+"@ethersproject/providers@^5.7.0", "@ethersproject/providers@5.7.2":
   "integrity" "sha512-g34EWZ1WWAVgr4aptGlVBF8mhl3VWjv+8hoAnzStu8Ah22VHBsuGzP17eb6xDVRzw895G4W7vvx60lFFur/1Rg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/providers/-/providers-5.7.2.tgz"
   "version" "5.7.2"
@@ -1534,7 +1534,7 @@
     "@ethersproject/rlp" "^5.7.0"
     "@ethersproject/signing-key" "^5.7.0"
 
-"@ethersproject/units@5.7.0":
+"@ethersproject/units@^5.7.0", "@ethersproject/units@5.7.0":
   "integrity" "sha512-pD3xLMy3SJu9kG5xDGI7+xhTEmGXlEqXU4OfNapmfnxLVY4EMSSRp7j1k7eezutBPH7RBN/7QPnwR7hzNlEFeg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/units/-/units-5.7.0.tgz"
   "version" "5.7.0"
@@ -1543,7 +1543,7 @@
     "@ethersproject/constants" "^5.7.0"
     "@ethersproject/logger" "^5.7.0"
 
-"@ethersproject/wallet@5.7.0":
+"@ethersproject/wallet@^5.7.0", "@ethersproject/wallet@5.7.0":
   "integrity" "sha512-MhmXlJXEJFBFVKrDLB4ZdDzxcBxQ3rLyCkhNqVu3CDYvR97E+8r01UgrI+TI99Le+aYm/in/0vp86guJuM7FCA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/wallet/-/wallet-5.7.0.tgz"
   "version" "5.7.0"
@@ -3314,6 +3314,26 @@
     "require-from-string" "^2.0.2"
     "uri-js" "^4.2.2"
 
+"alchemy-sdk@^2.4.0":
+  "integrity" "sha512-lk5VCcl9re6hyGwcmoYVJ7FxTjjSqhI0FaxgNAWop8oWms5Oe9Sss3tL+RgQ6LO+cYZ9/i7PYj8XXWPWds0XwQ=="
+  "resolved" "https://registry.npmjs.org/alchemy-sdk/-/alchemy-sdk-2.4.0.tgz"
+  "version" "2.4.0"
+  dependencies:
+    "@ethersproject/abi" "^5.7.0"
+    "@ethersproject/abstract-provider" "^5.7.0"
+    "@ethersproject/bignumber" "^5.7.0"
+    "@ethersproject/bytes" "^5.7.0"
+    "@ethersproject/contracts" "^5.7.0"
+    "@ethersproject/hash" "^5.7.0"
+    "@ethersproject/networks" "^5.7.0"
+    "@ethersproject/providers" "^5.7.0"
+    "@ethersproject/units" "^5.7.0"
+    "@ethersproject/wallet" "^5.7.0"
+    "@ethersproject/web" "^5.7.0"
+    "axios" "^0.26.1"
+    "sturdy-websocket" "^0.2.1"
+    "websocket" "^1.0.34"
+
 "ansi-escapes@^4.2.1", "ansi-escapes@^4.3.1":
   "integrity" "sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ=="
   "resolved" "https://registry.npmjs.org/ansi-escapes/-/ansi-escapes-4.3.2.tgz"
@@ -3555,6 +3575,13 @@
   "integrity" "sha512-b1WlTV8+XKLj9gZy2DZXgQiyDp9xkkoe2a6U6UbYccScq2wgH/YwCeI2/Jq2mgo0HzQxqJOjWZBLeA/mqsk5Mg=="
   "resolved" "https://registry.npmjs.org/axe-core/-/axe-core-4.6.2.tgz"
   "version" "4.6.2"
+
+"axios@^0.26.1":
+  "integrity" "sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.26.1.tgz"
+  "version" "0.26.1"
+  dependencies:
+    "follow-redirects" "^1.14.8"
 
 "axobject-query@^3.1.1":
   "integrity" "sha512-goKlv8DZrK9hUh975fnHzhNIO4jUnFCfv/dszV5VwUGDFjI6vQ2VwoyjYjYNEbBE8AH87TduWP5uyDR1D+Iteg=="
@@ -5246,6 +5273,11 @@
   "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-10.0.0.tgz"
   "version" "10.0.0"
 
+"dotenv@^16.0.3":
+  "integrity" "sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ=="
+  "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-16.0.3.tgz"
+  "version" "16.0.3"
+
 "draco3d@^1.4.1":
   "integrity" "sha512-JVuNV0EJzD3LBYhGyIXJLeBID/EVtmFO1ZNhAYflTgiMiAJlbhXQmRRda/azjc8MRVMHh0gqGhiqHUo5dIXM8Q=="
   "resolved" "https://registry.npmjs.org/draco3d/-/draco3d-1.5.5.tgz"
@@ -6195,7 +6227,7 @@
   "resolved" "https://registry.npmjs.org/flatted/-/flatted-3.2.7.tgz"
   "version" "3.2.7"
 
-"follow-redirects@^1.0.0":
+"follow-redirects@^1.0.0", "follow-redirects@^1.14.8":
   "integrity" "sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA=="
   "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.2.tgz"
   "version" "1.15.2"
@@ -11076,6 +11108,11 @@
   "resolved" "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-3.1.1.tgz"
   "version" "3.1.1"
 
+"sturdy-websocket@^0.2.1":
+  "integrity" "sha512-NnzSOEKyv4I83qbuKw9ROtJrrT6Z/Xt7I0HiP/e6H6GnpeTDvzwGIGeJ8slai+VwODSHQDooW2CAilJwT9SpRg=="
+  "resolved" "https://registry.npmjs.org/sturdy-websocket/-/sturdy-websocket-0.2.1.tgz"
+  "version" "0.2.1"
+
 "style-loader@^3.3.1":
   "integrity" "sha512-GPcQ+LDJbrcxHORTRes6Jy2sfvK2kS6hpSfI/fXhPt+spVzxF6LJ1dHLN9zIGmVaaP044YKaIatFaufENRiDoQ=="
   "resolved" "https://registry.npmjs.org/style-loader/-/style-loader-3.3.1.tgz"
@@ -12263,7 +12300,7 @@
   "resolved" "https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.4.tgz"
   "version" "0.1.4"
 
-"websocket@^1.0.32":
+"websocket@^1.0.32", "websocket@^1.0.34":
   "integrity" "sha512-PRDso2sGwF6kM75QykIesBijKSVceR6jL2G8NGYyq2XrItNC2P5/qL5XeR056GhA+Ly7JMFvJb9I312mJfmqnQ=="
   "resolved" "https://registry.npmjs.org/websocket/-/websocket-1.0.34.tgz"
   "version" "1.0.34"
