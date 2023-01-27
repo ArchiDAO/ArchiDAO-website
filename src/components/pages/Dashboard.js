@@ -43,6 +43,7 @@ function Dashboard() {
   const [symbol, setSymbol] = useState('');
   const [walletAddress, setWalletAddress] = useState('0x...')
   const [walletSigner, setWalletSigner] = useState('');
+  const [isNFTOwner, setIsNFTOwner] = useState('')
 
   useEffect(() => {
     async function getBlockNumber() {
@@ -90,15 +91,36 @@ function Dashboard() {
         window.ethereum.on("accountsChanged", () => { window.location.reload() });
         return accounts[0];
     }
-}
+  }
+
+  const logInWithNFT = async () => {
+    if(walletAddress) {
+        const isNFTOWner = await alchemy.nft.verifyNftOwnership(walletAddress, contractAddress);
+        const string = isNFTOWner.toString();
+        setIsNFTOwner(string);
+    }
+  }
+
+  const mintNFT = async () => {
+    const archiDaoContractInstanceSigner = new ethers.Contract(contractAddress, contractABI, walletSigner);
+
+    const mintNFT = await archiDaoContractInstanceSigner.mint(); 
+    console.log(mintNFT);
+  }
+
 
   return (
     <div className="App">
+      <h1>Goerli Testnet</h1>
         <div>Block Number: {blockNumber}</div>
+        <button onClick={mintNFT}>Mint NFT</button>
         <div>Contract Name: {contractName}</div>
         <div>Contract Symbol: {symbol}</div>
         <button onClick={connectMetamask}>Connect Wallet</button>
         <div>Wallet Address: {walletAddress} </div>
+        <button onClick={logInWithNFT}>Log in with NFT</button>
+        <div> Does your wallet contain an ArchiDAO NFT? <br /> {isNFTOwner}</div>
+        
     </div>
     );
 }
