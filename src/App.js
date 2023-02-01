@@ -10,9 +10,10 @@ import Navbar from './components/Navbar';
 // import People from './components/pages/People';
 import ReadRemoteFile from './components/ParseRemote';
 import Locations from './components/pages/Locations';
-// import Dashboard from './components/pages/Dashboard';
+import Dashboard from './components/pages/Dashboard';
 import Contact from './components/pages/Contact';
 import Learn from './components/pages/Learn';
+import Portfolio from './components/pages/Portfolio';
 
 
 
@@ -35,7 +36,8 @@ function App() {
                   <Route exact path="/contact" element={<Contact/>}/>
                   <Route exact path="/read" element={<ReadRemoteFile/>}/>
                   <Route exact path="/locations" element={<Locations/>}/>
-                  {/* <Route exact path="/dashboard" element={<Dashboard/>}/> */}
+                  <Route exact path="/portfolio" element={<Portfolio/>}/>
+                  <Route exact path="/dashboard" element={<Dashboard/>}/>
                   <Route exact path="/Learn" element={<Learn/>}/>
 
                 </Routes>          

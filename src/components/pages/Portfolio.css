@@ -1,0 +1,41 @@
+.Portfolio_main{
+    position:relative;
+    top: 10vh;
+ 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    z-index: 500;
+    color: gray;
+    
+    
+}
+
+.project_card{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 100;
+    width: 80vw;
+    max-width: 1200px;
+    height: 500px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.project_image{
+    width: 80vw;
+
+}
+
+.project_info{
+
+}
+
+.project_description{
+    text-align: right;
+}

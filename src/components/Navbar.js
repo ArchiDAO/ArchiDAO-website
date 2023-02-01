@@ -40,7 +40,7 @@ export default function Navbar()  {
                 <div className='menuitems' onClick={updateMenu}>
                
                      <li className='menuItem'><Link style={{color:'white'}} to="/About" >ABOUT</Link></li>
-                     {/* <li className='menuItem'><Link style={{color:'white'}}to="/Projects" >PORTFOLIO</Link></li> */}
+                     <li className='menuItem'><Link style={{color:'white'}}to="/portfolio" >PORTFOLIO</Link></li>
                      
                     <li className='menuItem'><Link style={{color:'white'}} to="/">GUILDS</Link></li>
           
