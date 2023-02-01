@@ -11,12 +11,12 @@
     padding-right: 100px;
     padding-top: 26px;
     color: white;
-    width: 40%;
+    width: 800px;
 }
 
 .learn__subtitle{
     position: relative;
-    font-size: 8vw;
+    font-size: 150px;
     font-family: 'Krona One', sans-serif;
     color: white;
     margin-right:0px;
@@ -32,7 +32,6 @@
 
 .learn_second__row{
     display: flex;
-  flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
     align-items: top;
@@ -45,7 +44,7 @@
     justify-content: center;
     align-items: center;
     height: 250px;
-    
+    /* max-width: 300px; */
     font-family: "Inter", serif;
     font-size: 20px;
     padding-left: 20px;
