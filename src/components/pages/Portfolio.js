@@ -39,18 +39,25 @@ return (<>
     {/* <Footer2 /> */}
 <div className='Portfolio_main'>
 {data.map((info) => {
-    return (
-        <div className='project_card' >
-            <img src={info[6]} alt='project_image' className='project_image'/>
+    return (<>
+      {/* <img src={info[6]} alt='project_image' className='project_image'/> */}
+
+        <div className='project_card' style={
+            {backgroundImage: `url(${info[6]})`}
+        }>
             <div className='project_info'>
-            <h1 >{info[0]}</h1>
+            <h1 className='project_title' >{info[0]}</h1>
             <h3>Client {info[1]}</h3>
             {/* <h3>{info[2]}</h3> */}
             <h4>{info[3]}</h4>
             </div>
-            <h4 className='project_description'>{info[8]}</h4>
+            <div className='project_description'>
+            <h4 >{info[8]}</h4>
+            <a href={info[7]} target='_blank' rel="noreferrer" className='project_link'>Link to project</a>
+            </div>
+         
 
-        </div>)
+        </div> </>)
 })}
 
 </div>
