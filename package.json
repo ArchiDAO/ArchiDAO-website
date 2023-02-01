@@ -15,9 +15,12 @@
     "@react-three/fiber": "8.8.10",
     "@react-three/postprocessing": "2.7.0",
     "@types/three": "0.144.0",
+    "alchemy-sdk": "^2.4.0",
     "bootstrap": "^5.2.2",
     "csvtojson": "^2.0.10",
+    "dotenv": "^16.0.3",
     "email-js": "^2.0.2",
+    "ethers": "^5.7.2",
     "formik": "^2.2.9",
     "lamina": "^1.1.23",
     "leva": "0.9.34",
@@ -32,7 +35,6 @@
     "web3": "^1.8.1",
     "wouter": "2.7.5"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

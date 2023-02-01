@@ -40,7 +40,7 @@ return (<>
 <div className='Portfolio_main'>
 {data.map((info) => {
     return (
-        <div className='project_card' style={{backgroundImage:}}>
+        <div className='project_card' >
             <img src={info[6]} alt='project_image' className='project_image'/>
             <div className='project_info'>
             <h1 >{info[0]}</h1>
