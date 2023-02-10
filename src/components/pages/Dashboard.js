@@ -41,9 +41,12 @@ function Dashboard() {
   const [blockNumber, setBlockNumber] = useState();
   const [contractName, setContractName] = useState();
   const [symbol, setSymbol] = useState('');
-  const [walletAddress, setWalletAddress] = useState('0x...')
+  const [walletAddress, setWalletAddress] = useState()
   const [walletSigner, setWalletSigner] = useState('');
-  const [isNFTOwner, setIsNFTOwner] = useState('')
+  const [isNFTOwner, setIsNFTOwner] = useState('');
+  const [tokenMetadata, setTokenMetadata] = useState();
+
+  const [hideDiv, setHideDiv] = useState(false)
 
   useEffect(() => {
     async function getBlockNumber() {
@@ -66,7 +69,7 @@ function Dashboard() {
     // }
     // getTokenURI()
 
-  });
+  }, []);
 
   const connectMetamask = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum); 
@@ -93,20 +96,62 @@ function Dashboard() {
     }
   }
 
-  const logInWithNFT = async () => {
-    if(walletAddress) {
-        const isNFTOWner = await alchemy.nft.verifyNftOwnership(walletAddress, contractAddress);
-        const string = isNFTOWner.toString();
-        setIsNFTOwner(string);
-    }
-  }
-
   const mintNFT = async () => {
     const archiDaoContractInstanceSigner = new ethers.Contract(contractAddress, contractABI, walletSigner);
 
     const mintNFT = await archiDaoContractInstanceSigner.mint(); 
     console.log(mintNFT);
   }
+
+  useEffect(() => {
+    const logInWithNFT = async () => {
+      if(walletAddress) {
+          const isNFTOwner = await alchemy.nft.verifyNftOwnership(walletAddress, contractAddress);
+          setIsNFTOwner(isNFTOwner);
+          if(isNFTOwner) {
+            console.log(isNFTOwner);
+            setHideDiv(true);
+            const getTokenURI = await archiDaoContractInstance.getTokenURI(1);
+
+            const tokenURISlice = getTokenURI.slice(29)
+
+            const buff = atob(tokenURISlice);
+            console.log(buff);
+
+            {/* image <div>{tokenMetadata.slice(96, 171)}</div> */}
+
+            setTokenMetadata(buff)
+            // console.log(getTokenURI);
+
+          } else if(!isNFTOwner) {
+            console.log('You are not yet a member of ArchiDAO')
+          }
+      }
+    }
+    logInWithNFT()
+
+  }, [walletAddress])
+
+  const Results = () => {
+    return (
+      <div>
+        <div> You are a Member of ArchiDAO</div>
+        <h3><b>Dashboard</b></h3>
+        {/* <div>TokenURI : {tokenMetadata}</div> */}
+        <div>Member Id: {tokenMetadata ? tokenMetadata.slice(37, 38) : null}</div>
+        <div>Description: {tokenMetadata ? tokenMetadata.slice(56, 86) : null} </div>
+        <div>Project Completed: {tokenMetadata ? tokenMetadata.slice(196, 197) : null} </div>
+        {/* <img src={tokenMetadata ? tokenMetadata.slice(96, 171) : null} ></img> */}
+        
+      </div>
+    )
+  }
+
+  const spliceTokenURI = () => {
+    console.log(tokenURI)
+  }
+
+
 
 
   return (
@@ -118,8 +163,10 @@ function Dashboard() {
         <div>Contract Symbol: {symbol}</div>
         <button onClick={connectMetamask}>Connect Wallet</button>
         <div>Wallet Address: {walletAddress} </div>
-        <button onClick={logInWithNFT}>Log in with NFT</button>
-        <div> Does your wallet contain an ArchiDAO NFT? <br /> {isNFTOwner}</div>
+        <br />
+        <div>
+          { hideDiv ? <Results /> : null}
+        </div>
         
     </div>
     );
