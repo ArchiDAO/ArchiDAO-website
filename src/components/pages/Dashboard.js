@@ -27,7 +27,7 @@ const contractABI = [
     "function name() view returns (string memory)",
     "function ownerOf(uint256 tokenId) public view returns (string memory)",
     "function symbol() public view returns(string memory)",
-    // "function tokenURI(uint256 tokenId) public view returns (string memory)"
+    "function addressToNFTNumber(address ownerAddress) public view returns(tuple(uint256 nftNumber))"
 ];
 
 
@@ -108,20 +108,23 @@ function Dashboard() {
       if(walletAddress) {
           const isNFTOwner = await alchemy.nft.verifyNftOwnership(walletAddress, contractAddress);
           setIsNFTOwner(isNFTOwner);
+          const addressNFTNumber = await archiDaoContractInstance.addressToNFTNumber(walletAddress);
+          let ownerNFTNumber = await addressNFTNumber.toString();
+
           if(isNFTOwner) {
             console.log(isNFTOwner);
             setHideDiv(true);
-            const getTokenURI = await archiDaoContractInstance.getTokenURI(1);
+            const getTokenURI = await archiDaoContractInstance.getTokenURI(ownerNFTNumber);
 
             const tokenURISlice = getTokenURI.slice(29)
 
-            const buff = atob(tokenURISlice);
-            console.log(buff);
+            const base64ToStr = atob(tokenURISlice);
+            console.log(base64ToStr);
 
             {/* image <div>{tokenMetadata.slice(96, 171)}</div> */}
 
-            setTokenMetadata(buff)
-            // console.log(getTokenURI);
+            setTokenMetadata(base64ToStr)
+
 
           } else if(!isNFTOwner) {
             console.log('You are not yet a member of ArchiDAO')
