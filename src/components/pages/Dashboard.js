@@ -138,12 +138,12 @@ function Dashboard() {
   const Results = () => {
     return (
       <div>
-        <div> You are a Member of ArchiDAO</div>
-        <h3><b>Dashboard</b></h3>
+        {/* <div> You are a Member of ArchiDAO</div> */}
+        {/* <h3><b>Dashboard</b></h3> */}
         {/* <div>TokenURI : {tokenMetadata}</div> */}
-        <div>Member Id: {tokenMetadata ? tokenMetadata.slice(37, 38) : null}</div>
+        {/* <div>Member Id: {tokenMetadata ? tokenMetadata.slice(37, 38) : null}</div>
         <div>Description: {tokenMetadata ? tokenMetadata.slice(56, 86) : null} </div>
-        <div>Project Completed: {tokenMetadata ? tokenMetadata.slice(196, 197) : null} </div>
+        <div>Project Completed: {tokenMetadata ? tokenMetadata.slice(196, 197) : null} </div> */}
         {/* <img src={tokenMetadata ? tokenMetadata.slice(96, 171) : null} ></img> */}
         
       </div>
@@ -159,14 +159,48 @@ function Dashboard() {
 
   return (
     <div className="App">
-      <h1>Goerli Testnet</h1>
-        <div>Block Number: {blockNumber}</div>
-        <button onClick={mintNFT}>Mint NFT</button>
-        <div>Contract Name: {contractName}</div>
-        <div>Contract Symbol: {symbol}</div>
-        <button onClick={connectMetamask}>Connect Wallet</button>
-        <div>Wallet Address: {walletAddress} </div>
-        <br />
+ 
+            <div className="about__container">
+            <button onClick={connectMetamask} style={{position:'fixed', right:'8vw', top:'130px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Connect Wallet</button>
+            <div className="about__content"  ><p style={{position:'fixed', right:'8vw', top:'180px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p></div>
+                <h1 className="about__title" style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px'}}>DASHBOARD</h1>
+                <div className="about__content" >
+                    <p style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'10px'}}>ArchiDAO Members Count:</p>
+             
+                </div>
+            </div>
+          
+
+        {/* <div>Block Number: {blockNumber}</div> */}
+        {/* <button onClick={mintNFT}>Mint NFT</button> */}
+        <div style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px', fontFamily:'Krona One', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}> {contractName}</div>
+         {/*<div>Contract Symbol: {symbol}</div> */}
+       
+       <div className='dash'>
+        <div className='dash__left'> 
+          <div className='dash__left__top'>
+            <div className='titles'>
+              <div>MEMBER ID </div>
+              <div>PROJECTS COMPLETED</div>
+            </div>
+            <div className='boxes1'> 
+              <div>{tokenMetadata ? tokenMetadata.slice(37, 38) : null}</div>
+              <div>{tokenMetadata ? tokenMetadata.slice(196, 197) : null}</div>
+            </div>
+
+             </div>
+             
+          <div className='dash__left__bottom'> 
+          <div className='title'>NFT IMAGE</div>
+          </div>
+        </div>
+        <div className='dash__right'>
+          {}
+          <div className='dash__right__left'> </div>
+          <div className='dash__right__right'> </div>
+        </div>
+       </div>
+      
         <div>
           { hideDiv ? <Results /> : null}
         </div>
