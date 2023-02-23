@@ -86,6 +86,13 @@ function Dashboard() {
     // getMemberSkillsStructMap()
   }
 
+  const disconnectMetamask = async () => {
+ 
+      setWalletAddress(null);
+      setWalletSigner(null);
+    
+  }
+
   const handleAccountsChanged = (accounts) => {
     if (accounts.length === 0 ) {
         console.log("Please connect to metamask")
@@ -112,19 +119,21 @@ function Dashboard() {
           let ownerNFTNumber = await addressNFTNumber.toString();
 
           if(isNFTOwner) {
-            console.log(isNFTOwner);
+            // console.log(isNFTOwner);
             setHideDiv(true);
             const getTokenURI = await archiDaoContractInstance.getTokenURI(ownerNFTNumber);
 
             const tokenURISlice = getTokenURI.slice(29)
 
             const base64ToStr = atob(tokenURISlice);
-            console.log(base64ToStr);
+            // console.log(base64ToStr);
 
             {/* image <div>{tokenMetadata.slice(96, 171)}</div> */}
 
             setTokenMetadata(base64ToStr)
-
+            const jsonStr = atob(tokenMetadata);
+const jsonObj = JSON.parse(jsonStr);
+console.log(jsonObj);
 
           } else if(!isNFTOwner) {
             console.log('You are not yet a member of ArchiDAO')
@@ -161,7 +170,12 @@ function Dashboard() {
     <div className="App">
  
             <div className="about__container">
-            <button onClick={connectMetamask} style={{position:'fixed', right:'8vw', top:'130px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Connect Wallet</button>
+              {walletAddress === 'null'? (
+                            <button onClick={connectMetamask} style={{position:'fixed', right:'8vw', top:'130px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Connect Wallet</button>
+              ):
+              (
+                <button onClick={disconnectMetamask} style={{position:'fixed', right:'8vw', top:'130px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Disconnect Wallet</button>
+              )}
             <div className="about__content"  ><p style={{position:'fixed', right:'8vw', top:'180px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p></div>
                 <h1 className="about__title" style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px'}}>DASHBOARD</h1>
                 <div className="about__content" >
@@ -175,7 +189,7 @@ function Dashboard() {
         {/* <button onClick={mintNFT}>Mint NFT</button> */}
         <div style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px', fontFamily:'Krona One', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}> {contractName}</div>
          {/*<div>Contract Symbol: {symbol}</div> */}
-       
+         {tokenMetadata ? (
        <div className='dash'>
         <div className='dash__left'> 
           <div className='dash__left__top'>
@@ -184,6 +198,7 @@ function Dashboard() {
               <div>PROJECTS COMPLETED</div>
             </div>
             <div className='boxes1'> 
+           
               <div>{tokenMetadata ? tokenMetadata.slice(37, 38) : null}</div>
               <div>{tokenMetadata ? tokenMetadata.slice(196, 197) : null}</div>
             </div>
@@ -195,11 +210,11 @@ function Dashboard() {
           </div>
         </div>
         <div className='dash__right'>
-          {}
+          
           <div className='dash__right__left'> </div>
           <div className='dash__right__right'> </div>
         </div>
-       </div>
+       </div> ) : null}
       
         <div>
           { hideDiv ? <Results /> : null}
