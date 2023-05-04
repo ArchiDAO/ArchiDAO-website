@@ -71,12 +71,26 @@ function Dashboard() {
 
   }, []);
 
+  /// required for the change of text in the button during connection and disconnection 
+  const [buttonText, setButtonText] = useState('Connect your wallet');
+  
+  ///when it disconnects it reloads the page   
+  function handleClick() {
+    if (buttonText === 'Connect your wallet'){
+      setButtonText('Disconnect your wallet');
+    }else {
+      window.location.reload();
+      setButtonText('Connect your wallet');
+    }
+  }
+
   const connectMetamask = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum); 
     const accounts = await provider.send("eth_requestAccounts", []); 
     const account = handleAccountsChanged(accounts);
     const signer = provider.getSigner();
 
+    handleClick()
     setWalletAddress(account);
     setWalletSigner(signer);
 
@@ -84,13 +98,6 @@ function Dashboard() {
     //     console.log(await archiDaoContractInstance.memberSkillsStructMap('0x04Ed8A52c9D99eB0925632273Ef30c5dbE0823dC'))
     // }
     // getMemberSkillsStructMap()
-  }
-
-  const disconnectMetamask = async () => {
- 
-      setWalletAddress(null);
-      setWalletSigner(null);
-    
   }
 
   const handleAccountsChanged = (accounts) => {
@@ -169,19 +176,14 @@ console.log(jsonObj);
   return (
     <div className="App">
  
-            <div className="about__container">
-              {walletAddress === 'null'? (
-                            <button onClick={connectMetamask} style={{position:'fixed', right:'8vw', top:'130px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Connect Wallet</button>
-              ):
-              (
-                <button onClick={disconnectMetamask} style={{position:'fixed', right:'8vw', top:'130px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Disconnect Wallet</button>
-              )}
-            <div className="about__content"  ><p style={{position:'fixed', right:'8vw', top:'180px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p></div>
-                <h1 className="about__title" style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px'}}>DASHBOARD</h1>
+ <div className ="about__container">
+              { 
+                <button onClick={connectMetamask} style={{position:'fixed', right:'8vw', top:'130px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >{buttonText}</button>
+              }
+              <div className="about__content"  ><p style={{position:'fixed', right:'8vw', top:'180px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p></div>
+              <h1 className="about__title" style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px'}}>DASHBOARD</h1>
                 <div className="about__content" >
-                    <p style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'10px'}}>ArchiDAO Members Count:</p>
-             
-                </div>
+                    <p style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'10px'}}>ArchiDAO Members Count:</p> </div>
             </div>
           
 
