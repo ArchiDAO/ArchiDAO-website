@@ -4,26 +4,32 @@ import { useEffect, useState } from 'react';
 
 import './Dashboard.css';
 
-// Refer to the README doc for more information about using API
-// keys in client-side code. You should never do this in production
-// level code.
-const settings = {
-  apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
-  network: Network.ETH_GOERLI,
-};
+// ALCHEMY threshold reached for May '23
+// const settings = {
+//   // apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
+//   // network: Network.ETH_GOERLI,
+//   apiKey: process.env.MUMBAI_ALCHEMY_API_KEY,
+//   network: Network.MATIC_MUMBAI,
+// };
+// const alchemy = new Alchemy(settings);
 
+// NETWORKS
+// const network = "goerli";
+// const contractAddress = "0x7EaEd8E4b176c683CA1173506Df334Fa5eDFea6b"; //goerli
+const network = "maticmum";
 
-// You can read more about the packages here:
-//   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
-const alchemy = new Alchemy(settings);
+// Provider
+// const alchemyProvider = new ethers.providers.AlchemyProvider(network, process.env.REACT_APP_ALCHEMY_API_KEY); //goerli
+// const alchemyProvider = new ethers.providers.AlchemyProvider(network, process.env.MUMBAI_ALCHEMY_API_KEY); //mumbai
+const infuraProvider = new ethers.providers.InfuraProvider( network, [process.env.MUMBAI_INFURA_API_KEY])
 
-const network = "goerli";
-const contractAddress = "0x7EaEd8E4b176c683CA1173506Df334Fa5eDFea6b";
+const contractAddress = "0xa69444d07c1FF34eEDB19bfDcc077A8B94f5781e"; //Mumbai
+
 const contractABI = [
     "function mint()",
-    "function updateMemberSkills(uint tokenId, uint _skill_1, uint _skill_2) public",
+    // "function updateMemberSkills(uint tokenId, uint _skill_1, uint _skill_2) public",
     "function getTokenURI(uint256 tokenId) public view returns (string memory)",
-    "function memberSkillsStructMap(address memberAddress) public view returns(tuple(uint256 memberId, uint256 skill_1, uint256 skill_2, uint256 skill_3, uint256 skill_4, uint256 skill_5, uint256 skill_6, uint256 skill_7, uint256 skill_8, uint256 skill_8, uint256 skill_9, uint256 skill_10, unit256 projectsCompleted))",
+    // "function memberSkillsStructMap(address memberAddress) public view returns(tuple(uint256 memberId, uint256 skill_1, uint256 skill_2, uint256 skill_3, uint256 skill_4, uint256 skill_5, uint256 skill_6, uint256 skill_7, uint256 skill_8, uint256 skill_8, uint256 skill_9, uint256 skill_10, unit256 projectsCompleted))",
     "function name() view returns (string memory)",
     "function ownerOf(uint256 tokenId) public view returns (string memory)",
     "function symbol() public view returns(string memory)",
@@ -31,11 +37,9 @@ const contractABI = [
 ];
 
 
-// Provider
-const alchemyProvider = new ethers.providers.AlchemyProvider(network, process.env.REACT_APP_ALCHEMY_API_KEY);
-// console.log(alchemyProvider)
-//contract
-const archiDaoContractInstance = new ethers.Contract(contractAddress, contractABI, alchemyProvider);
+//CONTRACT INSTANCE
+const archiDaoContractInstance = new ethers.Contract(contractAddress, contractABI, infuraProvider);
+// console.log(archiDaoContractInstance)
 
 function Dashboard() {
   const [blockNumber, setBlockNumber] = useState();
@@ -49,13 +53,14 @@ function Dashboard() {
   const [hideDiv, setHideDiv] = useState(false)
 
   useEffect(() => {
-    async function getBlockNumber() {
-      setBlockNumber(await alchemy.core.getBlockNumber());
-    }
-    getBlockNumber();
+    // async function getBlockNumber() {
+    //   setBlockNumber(await alchemy.core.getBlockNumber());
+    // }
+    // getBlockNumber();
 
     async function getContractName() {
         setContractName(await archiDaoContractInstance.name())
+        // console.log(contractName)
     }
     getContractName()
 
@@ -80,10 +85,12 @@ function Dashboard() {
     setWalletAddress(account);
     setWalletSigner(signer);
 
-    // async function getMemberSkillsStructMap() {
-    //     console.log(await archiDaoContractInstance.memberSkillsStructMap('0x04Ed8A52c9D99eB0925632273Ef30c5dbE0823dC'))
-    // }
-    // getMemberSkillsStructMap()
+    const createBnInstance = await archiDaoContractInstance.addressToNFTNumber(account)
+    const getNumber = ethers.BigNumber.from(createBnInstance.nftNumber)
+    console.log(getNumber.toNumber())
+
+    checkIfNftOwner(account);
+
   }
 
   const handleAccountsChanged = (accounts) => {
@@ -103,67 +110,67 @@ function Dashboard() {
     console.log(mintNFT);
   }
 
-  useEffect(() => {
-    const logInWithNFT = async () => {
-      if(walletAddress) {
-          const isNFTOwner = await alchemy.nft.verifyNftOwnership(walletAddress, contractAddress);
-          setIsNFTOwner(isNFTOwner);
-          const addressNFTNumber = await archiDaoContractInstance.addressToNFTNumber(walletAddress);
-          let ownerNFTNumber = await addressNFTNumber.toString();
+  // useEffect(() => {
+  //   const logInWithNFT = async () => {
+  //     if(walletAddress) {
+  //         const isNFTOwner = await alchemy.nft.verifyNftOwnership(walletAddress, contractAddress);
+  //         setIsNFTOwner(isNFTOwner);
+  //         const addressNFTNumber = await archiDaoContractInstance.addressToNFTNumber(walletAddress);
+  //         let ownerNFTNumber = await addressNFTNumber.toString();
 
-          if(isNFTOwner) {
-            console.log(isNFTOwner);
-            setHideDiv(true);
-            const getTokenURI = await archiDaoContractInstance.getTokenURI(ownerNFTNumber);
+  //         if(isNFTOwner) {
+  //           console.log(isNFTOwner);
+  //           setHideDiv(true);
+  //           const getTokenURI = await archiDaoContractInstance.getTokenURI(ownerNFTNumber);
 
-            const tokenURISlice = getTokenURI.slice(29)
+  //           const tokenURISlice = getTokenURI.slice(29)
 
-            const base64ToStr = atob(tokenURISlice);
-            console.log(base64ToStr);
+  //           const base64ToStr = atob(tokenURISlice);
+  //           console.log(base64ToStr);
 
-            {/* image <div>{tokenMetadata.slice(96, 171)}</div> */}
+  //           {/* image <div>{tokenMetadata.slice(96, 171)}</div> */}
 
-            setTokenMetadata(base64ToStr)
+  //           setTokenMetadata(base64ToStr)
 
 
-          } else if(!isNFTOwner) {
-            console.log('You are not yet a member of ArchiDAO')
-          }
-      }
-    }
-    logInWithNFT()
+  //         } else if(!isNFTOwner) {
+  //           console.log('You are not yet a member of ArchiDAO')
+  //         }
+  //     }
+  //   }
+  //   logInWithNFT()
 
-  }, [walletAddress])
+  // }, [walletAddress])
 
-  const Results = () => {
-    return (
-      <div>
-        <div> You are a Member of ArchiDAO</div>
-        <h3><b>Dashboard</b></h3>
-        {/* <div>TokenURI : {tokenMetadata}</div> */}
-        <div>Member Id: {tokenMetadata ? tokenMetadata.slice(37, 38) : null}</div>
-        <div>Description: {tokenMetadata ? tokenMetadata.slice(56, 86) : null} </div>
-        <div>Project Completed: {tokenMetadata ? tokenMetadata.slice(196, 197) : null} </div>
-        {/* <img src={tokenMetadata ? tokenMetadata.slice(96, 171) : null} ></img> */}
+  // const Results = () => {
+  //   return (
+  //     <div>
+  //       <div> You are a Member of ArchiDAO</div>
+  //       <h3><b>Dashboard</b></h3>
+  //       {/* <div>TokenURI : {tokenMetadata}</div> */}
+  //       <div>Member Id: {tokenMetadata ? tokenMetadata.slice(37, 38) : null}</div>
+  //       <div>Description: {tokenMetadata ? tokenMetadata.slice(56, 86) : null} </div>
+  //       <div>Project Completed: {tokenMetadata ? tokenMetadata.slice(196, 197) : null} </div>
+  //       {/* <img src={tokenMetadata ? tokenMetadata.slice(96, 171) : null} ></img> */}
         
-      </div>
-    )
-  }
+  //     </div>
+  //   )
+  // }
 
-  const spliceTokenURI = () => {
-    console.log(tokenURI)
-  }
-
-
-
+    async function checkIfNftOwner (walletAddress) {
+      const check = await archiDaoContractInstance.addressToNFTNumber(walletAddress)
+      console.log(check)
+    }
 
   return (
     <div className="App">
-      <h1>Goerli Testnet</h1>
+      <h1>Mumbai (MATIC) Testnet ({archiDaoContractInstance.provider._network.name})</h1>
         <div>Block Number: {blockNumber}</div>
         <button onClick={mintNFT}>Mint NFT</button>
+        <div><br /></div>
         <div>Contract Name: {contractName}</div>
         <div>Contract Symbol: {symbol}</div>
+        <div><br /></div>
         <button onClick={connectMetamask}>Connect Wallet</button>
         <div>Wallet Address: {walletAddress} </div>
         <br />
