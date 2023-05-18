@@ -85,10 +85,6 @@ function Dashboard() {
     setWalletAddress(account);
     setWalletSigner(signer);
 
-    const createBnInstance = await archiDaoContractInstance.addressToNFTNumber(account)
-    const getNumber = ethers.BigNumber.from(createBnInstance.nftNumber)
-    console.log(getNumber.toNumber())
-
     checkIfNftOwner(account);
 
   }
@@ -158,8 +154,9 @@ function Dashboard() {
   // }
 
     async function checkIfNftOwner (walletAddress) {
-      const check = await archiDaoContractInstance.addressToNFTNumber(walletAddress)
-      console.log(check)
+      const createBnInstance = await archiDaoContractInstance.addressToNFTNumber(walletAddress)
+      const getNumber = ethers.BigNumber.from(createBnInstance.nftNumber)
+      console.log(getNumber.toNumber())
     }
 
   return (
