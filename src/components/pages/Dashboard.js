@@ -1,4 +1,4 @@
-import { Alchemy, Network, Wallet, Utils } from 'alchemy-sdk';
+// import { Alchemy, Network, Wallet, Utils } from 'alchemy-sdk';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 
@@ -27,10 +27,8 @@ const contractAddress = "0xa69444d07c1FF34eEDB19bfDcc077A8B94f5781e"; //Mumbai
 
 const contractABI = [
     "function mint()",
-    // "function updateMemberSkills(uint tokenId, uint _skill_1, uint _skill_2) public",
-    "function getTokenURI(uint256 tokenId) public view returns (string memory)",
+    // "function getTokenURI(uint256 tokenId) public view returns (string memory)",
     "function tokenURI(uint256 tokenId) public view returns (string memory)",
-    // "function memberSkillsStructMap(address memberAddress) public view returns(tuple(uint256 memberId, uint256 skill_1, uint256 skill_2, uint256 skill_3, uint256 skill_4, uint256 skill_5, uint256 skill_6, uint256 skill_7, uint256 skill_8, uint256 skill_8, uint256 skill_9, uint256 skill_10, unit256 projectsCompleted))",
     "function name() view returns (string memory)",
     "function ownerOf(uint256 tokenId) public view returns (string memory)",
     "function symbol() public view returns(string memory)",
@@ -43,12 +41,11 @@ const archiDaoContractInstance = new ethers.Contract(contractAddress, contractAB
 // console.log(archiDaoContractInstance)
 
 function Dashboard() {
-  const [blockNumber, setBlockNumber] = useState();
   const [contractName, setContractName] = useState();
   const [symbol, setSymbol] = useState('');
-  const [walletAddress, setWalletAddress] = useState()
-  const [walletSigner, setWalletSigner] = useState('');
-  const [isNFTOwner, setIsNFTOwner] = useState('');
+  const [walletAddress, setWalletAddress] = useState(null)
+  const [walletSigner, setWalletSigner] = useState(null);
+  // const [isNFTOwner, setIsNFTOwner] = useState('');
   const [tokenMetadata, setTokenMetadata] = useState([]);
 
   const [hideDiv, setHideDiv] = useState(false)
@@ -102,14 +99,13 @@ function Dashboard() {
   async function checkIfNftOwner (walletAddress) {
     const createBnInstance = await archiDaoContractInstance.addressToNFTNumber(walletAddress)
     const getNumber = ethers.BigNumber.from(createBnInstance.nftNumber).toNumber()
-    console.log(getNumber);
+    console.log('MemberID:', getNumber);
 
     if(getNumber > 0) {
       setHideDiv(true);
       getMetadata(getNumber)
     } else {
-      const res = document.getElementsByClassName('no-results')[0].innerHTML = '<h1>You are not a ArchiDAO member</h1>'
-      // console.log(res)
+      document.getElementsByClassName('no-results')[0].innerHTML = '<h1>You are not a ArchiDAO member</h1>'
     }
   }
 
@@ -130,7 +126,9 @@ function Dashboard() {
 
   const mintNFT = async () => {
     const archiDaoContractInstanceSigner = new ethers.Contract(contractAddress, contractABI, walletSigner);
-
+    if(walletSigner === null) {
+      alert('Connect Metamask');
+    }
     const mintNFT = await archiDaoContractInstanceSigner.mint(); 
     console.log(mintNFT);
   }
@@ -195,14 +193,12 @@ function Dashboard() {
   return (
     <div className="App">
       <h1>Mumbai (MATIC) Testnet ({archiDaoContractInstance.provider._network.name})</h1>
-        {/* <div>Block Number: {blockNumber}</div> */}
         <button onClick={mintNFT} style={{position:'fixed', top:'150px', backgroundColor:'orange',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }}>Mint NFT</button>
         <div><br /></div>
         <div>Contract Name: {contractName}</div>
         <div>Contract Symbol: {symbol}</div>
         <div><br /></div>
 
-        {/* <button onClick={connectMetamask} style={{position:'fixed', right:'8vw', top:'50px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }}>Connect Wallet</button> */}
         {walletAddress === null ? 
               (
                 <button onClick={connectMetamask} style={{position:'fixed', right:'8vw', top:'70px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Connect Wallet</button>
@@ -213,8 +209,7 @@ function Dashboard() {
               )
               }
 
-        {/* <div>Wallet Address: {walletAddress} </div> */}
-        <p style={{position:'fixed', left:'8vw', top:'150px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p>
+        <p style={{position:'fixed', left:'1vw', top:'140px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p>
         <br />
         <div className='results'>
           <div className='no-results'></div>
