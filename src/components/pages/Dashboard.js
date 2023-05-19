@@ -86,7 +86,7 @@ function Dashboard() {
     setWalletSigner(null);
     setHideDiv(false);
 
-    document.getElementsByClassName('results')[0].innerHTML = ''
+    document.getElementsByClassName('no-results')[0].innerHTML = ''
   }
 
   const handleAccountsChanged = (accounts) => {
@@ -108,7 +108,7 @@ function Dashboard() {
       setHideDiv(true);
       getMetadata(getNumber)
     } else {
-      const res = document.getElementsByClassName('results')[0].innerHTML = '<h1>You are not a ArchiDAO member</h1>'
+      const res = document.getElementsByClassName('no-results')[0].innerHTML = '<h1>You are not a ArchiDAO member</h1>'
       // console.log(res)
     }
   }
@@ -217,6 +217,7 @@ function Dashboard() {
         <p style={{position:'fixed', left:'8vw', top:'150px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p>
         <br />
         <div className='results'>
+          <div className='no-results'></div>
           { hideDiv ? <Results /> : null}
         </div>
         
