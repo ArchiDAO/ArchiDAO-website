@@ -79,8 +79,14 @@ function Dashboard() {
 
     checkIfNftOwner(account);
 
-    //get nft metadata 
+  }
 
+  const disconnectMetamask = async () => {
+    setWalletAddress(null);
+    setWalletSigner(null);
+    setHideDiv(false);
+
+    document.getElementsByClassName('results')[0].innerHTML = ''
   }
 
   const handleAccountsChanged = (accounts) => {
@@ -164,9 +170,18 @@ function Dashboard() {
   const Results = () => {
 
     return (
-      <div>
-        <h1> You are a Member of ArchiDAO</h1>
-        <h2><b>Dashboard</b></h2>
+        <div>
+
+          {/* <div className="about__content"  ><p style={{position:'fixed', right:'8vw', top:'180px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p></div> */}
+          <h1 className="about__title" style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px'}}>DASHBOARD</h1>
+          <div className="about__content" >
+          {/* <p style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'10px'}}>ArchiDAO Members Count: </p> */}
+          </div>
+          <br />
+          {/* <div style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px', fontFamily:'Krona One', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}> {contractName}</div> */}
+
+        {/* <h1> You are a Member of ArchiDAO</h1> */}
+        {/* <h2><b>Dashboard</b></h2> */}
         <div>Member ID: {tokenMetadata.memberId} </div>
         <div>Description: {tokenMetadata.description}</div>
         <div>Image URL: <a style={{'color': 'blue'}} target='_blank' href={tokenMetadata.image} >ArchiDAO NFT Image </a></div>
@@ -181,13 +196,25 @@ function Dashboard() {
     <div className="App">
       <h1>Mumbai (MATIC) Testnet ({archiDaoContractInstance.provider._network.name})</h1>
         {/* <div>Block Number: {blockNumber}</div> */}
-        <button onClick={mintNFT}>Mint NFT</button>
+        <button onClick={mintNFT} style={{position:'fixed', top:'150px', backgroundColor:'orange',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }}>Mint NFT</button>
         <div><br /></div>
         <div>Contract Name: {contractName}</div>
         <div>Contract Symbol: {symbol}</div>
         <div><br /></div>
-        <button onClick={connectMetamask}>Connect Wallet</button>
-        <div>Wallet Address: {walletAddress} </div>
+
+        {/* <button onClick={connectMetamask} style={{position:'fixed', right:'8vw', top:'50px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }}>Connect Wallet</button> */}
+        {walletAddress === null ? 
+              (
+                <button onClick={connectMetamask} style={{position:'fixed', right:'8vw', top:'70px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Connect Wallet</button>
+              )
+              :
+              (
+                <button onClick={disconnectMetamask} style={{position:'fixed', right:'8vw', top:'70px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Disconnect Wallet</button>
+              )
+              }
+
+        {/* <div>Wallet Address: {walletAddress} </div> */}
+        <p style={{position:'fixed', left:'8vw', top:'150px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p>
         <br />
         <div className='results'>
           { hideDiv ? <Results /> : null}
