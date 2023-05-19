@@ -29,6 +29,7 @@ const contractABI = [
     "function mint()",
     // "function updateMemberSkills(uint tokenId, uint _skill_1, uint _skill_2) public",
     "function getTokenURI(uint256 tokenId) public view returns (string memory)",
+    "function tokenURI(uint256 tokenId) public view returns (string memory)",
     // "function memberSkillsStructMap(address memberAddress) public view returns(tuple(uint256 memberId, uint256 skill_1, uint256 skill_2, uint256 skill_3, uint256 skill_4, uint256 skill_5, uint256 skill_6, uint256 skill_7, uint256 skill_8, uint256 skill_8, uint256 skill_9, uint256 skill_10, unit256 projectsCompleted))",
     "function name() view returns (string memory)",
     "function ownerOf(uint256 tokenId) public view returns (string memory)",
@@ -48,15 +49,11 @@ function Dashboard() {
   const [walletAddress, setWalletAddress] = useState()
   const [walletSigner, setWalletSigner] = useState('');
   const [isNFTOwner, setIsNFTOwner] = useState('');
-  const [tokenMetadata, setTokenMetadata] = useState();
+  const [tokenMetadata, setTokenMetadata] = useState([]);
 
   const [hideDiv, setHideDiv] = useState(false)
 
   useEffect(() => {
-    // async function getBlockNumber() {
-    //   setBlockNumber(await alchemy.core.getBlockNumber());
-    // }
-    // getBlockNumber();
 
     async function getContractName() {
         setContractName(await archiDaoContractInstance.name())
@@ -68,11 +65,6 @@ function Dashboard() {
         setSymbol(await archiDaoContractInstance.symbol())
     }
     getContractSymbol()
-
-    // async function getTokenURI() {
-    //     console.log(await archiDaoContractInstance.getTokenURI(1))
-    // }
-    // getTokenURI()
 
   }, []);
 
@@ -87,6 +79,8 @@ function Dashboard() {
 
     checkIfNftOwner(account);
 
+    //get nft metadata 
+
   }
 
   const handleAccountsChanged = (accounts) => {
@@ -97,6 +91,35 @@ function Dashboard() {
         window.ethereum.on("accountsChanged", () => { window.location.reload() });
         return accounts[0];
     }
+  }
+
+  async function checkIfNftOwner (walletAddress) {
+    const createBnInstance = await archiDaoContractInstance.addressToNFTNumber(walletAddress)
+    const getNumber = ethers.BigNumber.from(createBnInstance.nftNumber).toNumber()
+    console.log(getNumber);
+
+    if(getNumber > 0) {
+      setHideDiv(true);
+      getMetadata(getNumber)
+    } else {
+      const res = document.getElementsByClassName('results')[0].innerHTML = '<h1>You are not a ArchiDAO member</h1>'
+      // console.log(res)
+    }
+  }
+
+  async function getMetadata (getNumber) {
+    const metadata = await archiDaoContractInstance.tokenURI(getNumber);
+    const metadataSlice = metadata.slice(29);
+
+    const base64ToStr = atob(metadataSlice);
+    // const buffer = Buffer.from(metadataSlice, 'base64')
+    // console.log(buffer)
+
+    const jsonParse = await JSON.parse(base64ToStr)
+
+    console.log(jsonParse)
+
+    setTokenMetadata(jsonParse);
   }
 
   const mintNFT = async () => {
@@ -138,31 +161,26 @@ function Dashboard() {
 
   // }, [walletAddress])
 
-  // const Results = () => {
-  //   return (
-  //     <div>
-  //       <div> You are a Member of ArchiDAO</div>
-  //       <h3><b>Dashboard</b></h3>
-  //       {/* <div>TokenURI : {tokenMetadata}</div> */}
-  //       <div>Member Id: {tokenMetadata ? tokenMetadata.slice(37, 38) : null}</div>
-  //       <div>Description: {tokenMetadata ? tokenMetadata.slice(56, 86) : null} </div>
-  //       <div>Project Completed: {tokenMetadata ? tokenMetadata.slice(196, 197) : null} </div>
-  //       {/* <img src={tokenMetadata ? tokenMetadata.slice(96, 171) : null} ></img> */}
-        
-  //     </div>
-  //   )
-  // }
+  const Results = () => {
 
-    async function checkIfNftOwner (walletAddress) {
-      const createBnInstance = await archiDaoContractInstance.addressToNFTNumber(walletAddress)
-      const getNumber = ethers.BigNumber.from(createBnInstance.nftNumber)
-      console.log(getNumber.toNumber())
-    }
+    return (
+      <div>
+        <h1> You are a Member of ArchiDAO</h1>
+        <h2><b>Dashboard</b></h2>
+        <div>Member ID: {tokenMetadata.memberId} </div>
+        <div>Description: {tokenMetadata.description}</div>
+        <div>Image URL: <a style={{'color': 'blue'}} target='_blank' href={tokenMetadata.image} >ArchiDAO NFT Image </a></div>
+        {/* <img id='img' src={tokenMetadata.image} alt='image file'/> */}
+        <div><a style={{'color': 'blue'}} href='https://snapshot.org/#/archidao.eth' target='_blank'>SnapShot Voting</a></div>
+         
+      </div>
+    )
+  }
 
   return (
     <div className="App">
       <h1>Mumbai (MATIC) Testnet ({archiDaoContractInstance.provider._network.name})</h1>
-        <div>Block Number: {blockNumber}</div>
+        {/* <div>Block Number: {blockNumber}</div> */}
         <button onClick={mintNFT}>Mint NFT</button>
         <div><br /></div>
         <div>Contract Name: {contractName}</div>
@@ -171,7 +189,7 @@ function Dashboard() {
         <button onClick={connectMetamask}>Connect Wallet</button>
         <div>Wallet Address: {walletAddress} </div>
         <br />
-        <div>
+        <div className='results'>
           { hideDiv ? <Results /> : null}
         </div>
         
