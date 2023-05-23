@@ -55,6 +55,15 @@ function Dashboard() {
   const [hideDiv, setHideDiv] = useState(false)
 
   useEffect(() => {
+    const getSpaces = async() => {
+      const data = await fetch('https://testnet.snapshot.org/graphql?query=query%20%7B%0A%20%20space(id%3A%20%22adaogoerli.eth%22)%20%7B%0A%20%20%20%20id%0A%20%20%20%20name%0A%20%20%20%20about%0A%20%20%20%20network%0A%20%20%20%20symbol%0A%20%20%20%20members%0A%20%20%7D%0A%7D')
+      const json = await data.json();
+      console.log(json.data.space)
+    }
+    getSpaces()
+  }, [])
+
+  useEffect(() => {
 
     async function getContractName() {
         setContractName(await archiDaoContractInstance.name())
