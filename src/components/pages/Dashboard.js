@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react';
 
 import './Dashboard.css';
 
+//FETCH Snapshot Spaces ADAOgoerli data.
+// console.log('https://testnet.snapshot.org/graphql?query=query%20%7B%0A%20%20space(id%3A%20%22adaogoerli.eth%22)%20%7B%0A%20%20%20%20id%0A%20%20%20%20name%0A%20%20%20%20about%0A%20%20%20%20network%0A%20%20%20%20symbol%0A%20%20%20%20members%0A%20%20%7D%0A%7D')
+
+
 // ALCHEMY threshold reached for May '23
 // const settings = {
 //   // apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
@@ -170,21 +174,11 @@ function Dashboard() {
     return (
         <div>
 
-          {/* <div className="about__content"  ><p style={{position:'fixed', right:'8vw', top:'180px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p></div> */}
-          <h1 className="about__title" style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px'}}>DASHBOARD</h1>
-          <div className="about__content" >
-          {/* <p style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'10px'}}>ArchiDAO Members Count: </p> */}
-          </div>
-          <br />
-          {/* <div style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px', fontFamily:'Krona One', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}> {contractName}</div> */}
-
-        {/* <h1> You are a Member of ArchiDAO</h1> */}
-        {/* <h2><b>Dashboard</b></h2> */}
-        <div>Member ID: {tokenMetadata.memberId} </div>
-        <div>Description: {tokenMetadata.description}</div>
-        <div>Image URL: <a style={{'color': 'blue'}} target='_blank' href={tokenMetadata.image} >ArchiDAO NFT Image </a></div>
+        <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Member ID: {tokenMetadata.memberId} </div>
+        <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', paddingTop:'20px', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Description: {tokenMetadata.description}</div>
+        <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', paddingTop:'20px', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Image URL: <a style={{'color': 'blue'}} target='_blank' href={tokenMetadata.image} >ArchiDAO NFT Image </a></div>
         {/* <img id='img' src={tokenMetadata.image} alt='image file'/> */}
-        <div><a style={{'color': 'blue'}} href='https://snapshot.org/#/archidao.eth' target='_blank'>SnapShot Voting</a></div>
+        <div style={{textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', fontWeight:'bold', paddingTop:'20px', fontSize:'20px', letterSpacing:'8px' }}><a style={{color:'orange'}} href='ipfs://bafybeiby7if73utdzlbwo2cm2rygtcse5j3wsr2pogylwt4jw46pzzeq3e/#/adaogoerli.eth' target='_blank'>SnapShot Voting</a></div>
          
       </div>
     )
@@ -192,12 +186,13 @@ function Dashboard() {
 
   return (
     <div className="App">
+      
       <h1>Mumbai (MATIC) Testnet ({archiDaoContractInstance.provider._network.name})</h1>
         <button onClick={mintNFT} style={{position:'fixed', top:'150px', backgroundColor:'orange',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }}>Mint NFT</button>
-        <div><br /></div>
-        <div>Contract Name: {contractName}</div>
-        <div>Contract Symbol: {symbol}</div>
-        <div><br /></div>
+        <h1 className="about__title" style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px'}}>DASHBOARD</h1>
+
+        <div style={{color:'black', textAlign:'center', paddingLeft:'100px', paddingTop:'40px', fontFamily:'Krona One', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}> {contractName}</div>
+        {/* <div>Contract Symbol: {symbol}</div> */}
 
         {walletAddress === null ? 
               (
@@ -209,7 +204,7 @@ function Dashboard() {
               )
               }
 
-        <p style={{position:'fixed', left:'1vw', top:'140px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p>
+        <p style={{position:'fixed', left:'1vw', top:'60px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p>
         <br />
         <div className='results'>
           <div className='no-results'></div>
