@@ -132,7 +132,7 @@ function Dashboard() {
 
     const jsonParse = await JSON.parse(base64ToStr)
 
-    console.log(jsonParse)
+    // console.log(jsonParse)
 
     setTokenMetadata(jsonParse);
   }
@@ -180,15 +180,24 @@ function Dashboard() {
 
   const Results = () => {
 
+    // let img;
+    // if(tokenMetadata.image) {
+    //   img = tokenMetadata.image;
+    //   // img = img.slice(0,67)
+    //   console.log(img)
+    // }
+
+
     return (
         <div>
-
+        {/* 'https://ipfs.io/ipfs/QmcGZuEdFZNY7pxnKCfCVckXhABw4eLYZcYBNvExYZv5TP?filename=2.png' */}
+        {/* 'https://ipfs.io/ipfs/QmcGZuEdFZNY7pxnKCfCVckXhABw4eLYZcYBNvExYZv5TP'  */}
+        <img style={{paddingLeft:'100px', marginBottom: '20px'}} id='img' src={'https://ipfs.io/ipfs/QmcGZuEdFZNY7pxnKCfCVckXhABw4eLYZcYBNvExYZv5TP'} alt='image file'/>
         <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Member ID: {tokenMetadata.memberId} </div>
         <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', paddingTop:'20px', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Description: {tokenMetadata.description}</div>
-        <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', paddingTop:'20px', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Image URL: <a style={{'color': 'blue'}} target='_blank' href={tokenMetadata.image} >ArchiDAO NFT Image </a></div>
-        {/* <img id='img' src={tokenMetadata.image} alt='image file'/> */}
+        {/* <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', paddingTop:'20px', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Image URL: <a style={{'color': 'blue'}} target='_blank' href={tokenMetadata.image} >ArchiDAO NFT Image </a></div> */}
         <div style={{textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', fontWeight:'bold', paddingTop:'20px', fontSize:'20px', letterSpacing:'8px' }}><a style={{color:'orange'}} href='ipfs://bafybeiby7if73utdzlbwo2cm2rygtcse5j3wsr2pogylwt4jw46pzzeq3e/#/adaogoerli.eth' target='_blank'>SnapShot Voting</a></div>
-         
+    
       </div>
     )
   }
