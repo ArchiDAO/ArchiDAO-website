@@ -1,73 +1,85 @@
-import { Alchemy, Network, Wallet, Utils } from 'alchemy-sdk';
+// import { Alchemy, Network, Wallet, Utils } from 'alchemy-sdk';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 
 import './Dashboard.css';
 
-// Refer to the README doc for more information about using API
-// keys in client-side code. You should never do this in production
-// level code.
-const settings = {
-  apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
-  network: Network.ETH_GOERLI,
-};
+//FETCH Snapshot Spaces archidaogoerli.eth data.
+// console.log('https://testnet.snapshot.org/graphql?query=query%20%7B%0A%20%20space(id%3A%20%22archidaogoerli.eth%22)%20%7B%0A%20%20%20%20id%0A%20%20%20%20name%0A%20%20%20%20about%0A%20%20%20%20network%0A%20%20%20%20symbol%0A%20%20%20%20members%0A%20%20%7D%0A%7D')
 
 
-// You can read more about the packages here:
-//   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
-const alchemy = new Alchemy(settings);
+// ALCHEMY threshold reached for May '23
+// const settings = {
+//   // apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
+//   // network: Network.ETH_GOERLI,
+//   apiKey: process.env.MUMBAI_ALCHEMY_API_KEY,
+//   network: Network.MATIC_MUMBAI,
+// };
+// const alchemy = new Alchemy(settings);
 
-const network = "goerli";
-const contractAddress = "0x7EaEd8E4b176c683CA1173506Df334Fa5eDFea6b";
+// NETWORKS
+const network = "goerli"; //"maticmum";
+
+// Provider
+// const alchemyProvider = new ethers.providers.AlchemyProvider(network, process.env.REACT_APP_ALCHEMY_API_KEY); //goerli
+const infuraProvider = new ethers.providers.InfuraProvider( network, [process.env.INFURA_GOERLI_API])
+
+const contractAddress = "0x9f8774A535659865D81361Bb8Fc449Fd1B056d0E"; //Goerli
+
 const contractABI = [
     "function mint()",
-    "function updateMemberSkills(uint tokenId, uint _skill_1, uint _skill_2) public",
-    "function getTokenURI(uint256 tokenId) public view returns (string memory)",
-    "function memberSkillsStructMap(address memberAddress) public view returns(tuple(uint256 memberId, uint256 skill_1, uint256 skill_2, uint256 skill_3, uint256 skill_4, uint256 skill_5, uint256 skill_6, uint256 skill_7, uint256 skill_8, uint256 skill_8, uint256 skill_9, uint256 skill_10, unit256 projectsCompleted))",
+    // "function getTokenURI(uint256 tokenId) public view returns (string memory)",
+    "function tokenURI(uint256 tokenId) public view returns (string memory)",
     "function name() view returns (string memory)",
     "function ownerOf(uint256 tokenId) public view returns (string memory)",
     "function symbol() public view returns(string memory)",
-    "function addressToNFTNumber(address ownerAddress) public view returns(tuple(uint256 nftNumber))"
+    "function addressToNFTNumber(address ownerAddress) public view returns(tuple(uint256 nftNumber))",
+    "function _tokenIds() public view returns(uint)"
 ];
 
-
-// Provider
-const alchemyProvider = new ethers.providers.AlchemyProvider(network, process.env.REACT_APP_ALCHEMY_API_KEY);
-// console.log(alchemyProvider)
-//contract
-const archiDaoContractInstance = new ethers.Contract(contractAddress, contractABI, alchemyProvider);
+//CONTRACT INSTANCE
+const archiDaoContractInstance = new ethers.Contract(contractAddress, contractABI, infuraProvider);
 
 function Dashboard() {
-  const [blockNumber, setBlockNumber] = useState();
   const [contractName, setContractName] = useState();
-  const [symbol, setSymbol] = useState('');
-  const [walletAddress, setWalletAddress] = useState()
-  const [walletSigner, setWalletSigner] = useState('');
-  const [isNFTOwner, setIsNFTOwner] = useState('');
-  const [tokenMetadata, setTokenMetadata] = useState();
+  // const [symbol, setSymbol] = useState('');
+  const [walletAddress, setWalletAddress] = useState(null)
+  const [walletSigner, setWalletSigner] = useState(null);
+  // const [isNFTOwner, setIsNFTOwner] = useState('');
+  const [tokenMetadata, setTokenMetadata] = useState([]);
+  const [membersCount, setMembersCount] = useState();
 
   const [hideDiv, setHideDiv] = useState(false)
 
   useEffect(() => {
-    async function getBlockNumber() {
-      setBlockNumber(await alchemy.core.getBlockNumber());
+    const getSpaces = async() => {
+      const data = await fetch('https://testnet.snapshot.org/graphql?query=query%20%7B%0A%20%20space(id%3A%20%22archidaogoerli.eth%22)%20%7B%0A%20%20%20%20id%0A%20%20%20%20name%0A%20%20%20%20about%0A%20%20%20%20network%0A%20%20%20%20symbol%0A%20%20%20%20members%0A%20%20%7D%0A%7D')
+      const json = await data.json();
+      console.log(json.data.space)
     }
-    getBlockNumber();
+    getSpaces()
+  }, [])
+
+  useEffect(() => {
 
     async function getContractName() {
         setContractName(await archiDaoContractInstance.name())
+        // console.log(contractName)
     }
     getContractName()
 
-    async function getContractSymbol() {
-        setSymbol(await archiDaoContractInstance.symbol())
-    }
-    getContractSymbol()
-
-    // async function getTokenURI() {
-    //     console.log(await archiDaoContractInstance.getTokenURI(1))
+    // async function getContractSymbol() {
+    //     setSymbol(await archiDaoContractInstance.symbol())
     // }
-    // getTokenURI()
+    // getContractSymbol()
+
+    async function getTokenIds() {
+      const tokenIdBN = await archiDaoContractInstance._tokenIds()
+      const tokenId = tokenIdBN.toString()
+      setMembersCount(tokenId);
+
+    }
+    getTokenIds()
 
   }, []);
 
@@ -80,17 +92,16 @@ function Dashboard() {
     setWalletAddress(account);
     setWalletSigner(signer);
 
-    // async function getMemberSkillsStructMap() {
-    //     console.log(await archiDaoContractInstance.memberSkillsStructMap('0x04Ed8A52c9D99eB0925632273Ef30c5dbE0823dC'))
-    // }
-    // getMemberSkillsStructMap()
+    checkIfNftOwner(account);
+
   }
 
   const disconnectMetamask = async () => {
- 
-      setWalletAddress(null);
-      setWalletSigner(null);
-    
+    setWalletAddress(null);
+    setWalletSigner(null);
+    setHideDiv(false);
+
+    document.getElementsByClassName('no-results')[0].innerHTML = ''
   }
 
   const handleAccountsChanged = (accounts) => {
@@ -103,120 +114,118 @@ function Dashboard() {
     }
   }
 
+  async function checkIfNftOwner (walletAddress) {
+    const createBnInstance = await archiDaoContractInstance.addressToNFTNumber(walletAddress)
+    const getNumber = ethers.BigNumber.from(createBnInstance.nftNumber).toNumber()
+    console.log('MemberID:', getNumber);
+
+    if(getNumber > 0) {
+      setHideDiv(true);
+      getMetadata(getNumber)
+    } else {
+      document.getElementsByClassName('no-results')[0].innerHTML = '<h1>You are not a ArchiDAO member</h1>'
+    }
+  }
+
+  async function getMetadata (getNumber) {
+    const metadata = await archiDaoContractInstance.tokenURI(getNumber);
+    const metadataSlice = metadata.slice(29);
+
+    const base64ToStr = atob(metadataSlice);
+    // const buffer = Buffer.from(metadataSlice, 'base64')
+    // console.log(buffer)
+
+    const jsonParse = await JSON.parse(base64ToStr)
+
+    // console.log(jsonParse)
+
+    setTokenMetadata(jsonParse);
+  }
+
   const mintNFT = async () => {
     const archiDaoContractInstanceSigner = new ethers.Contract(contractAddress, contractABI, walletSigner);
-
+    if(walletSigner === null) {
+      alert('Connect Metamask');
+    }
     const mintNFT = await archiDaoContractInstanceSigner.mint(); 
     console.log(mintNFT);
   }
 
-  useEffect(() => {
-    const logInWithNFT = async () => {
-      if(walletAddress) {
-          const isNFTOwner = await alchemy.nft.verifyNftOwnership(walletAddress, contractAddress);
-          setIsNFTOwner(isNFTOwner);
-          const addressNFTNumber = await archiDaoContractInstance.addressToNFTNumber(walletAddress);
-          let ownerNFTNumber = await addressNFTNumber.toString();
+  // useEffect(() => {
+  //   const logInWithNFT = async () => {
+  //     if(walletAddress) {
+  //         const isNFTOwner = await alchemy.nft.verifyNftOwnership(walletAddress, contractAddress);
+  //         setIsNFTOwner(isNFTOwner);
+  //         const addressNFTNumber = await archiDaoContractInstance.addressToNFTNumber(walletAddress);
+  //         let ownerNFTNumber = await addressNFTNumber.toString();
 
-          if(isNFTOwner) {
-            // console.log(isNFTOwner);
-            setHideDiv(true);
-            const getTokenURI = await archiDaoContractInstance.getTokenURI(ownerNFTNumber);
+  //         if(isNFTOwner) {
+  //           console.log(isNFTOwner);
+  //           setHideDiv(true);
+  //           const getTokenURI = await archiDaoContractInstance.getTokenURI(ownerNFTNumber);
 
-            const tokenURISlice = getTokenURI.slice(29)
+  //           const tokenURISlice = getTokenURI.slice(29)
 
-            const base64ToStr = atob(tokenURISlice);
-            // console.log(base64ToStr);
+  //           const base64ToStr = atob(tokenURISlice);
+  //           console.log(base64ToStr);
 
-            {/* image <div>{tokenMetadata.slice(96, 171)}</div> */}
+  //           {/* image <div>{tokenMetadata.slice(96, 171)}</div> */}
 
-            setTokenMetadata(base64ToStr)
-            const jsonStr = atob(tokenMetadata);
-const jsonObj = JSON.parse(jsonStr);
-console.log(jsonObj);
+  //           setTokenMetadata(base64ToStr)
 
-          } else if(!isNFTOwner) {
-            console.log('You are not yet a member of ArchiDAO')
-          }
-      }
-    }
-    logInWithNFT()
 
-  }, [walletAddress])
+  //         } else if(!isNFTOwner) {
+  //           console.log('You are not yet a member of ArchiDAO')
+  //         }
+  //     }
+  //   }
+  //   logInWithNFT()
+
+  // }, [walletAddress])
 
   const Results = () => {
+
+
     return (
-      <div>
-        {/* <div> You are a Member of ArchiDAO</div> */}
-        {/* <h3><b>Dashboard</b></h3> */}
-        {/* <div>TokenURI : {tokenMetadata}</div> */}
-        {/* <div>Member Id: {tokenMetadata ? tokenMetadata.slice(37, 38) : null}</div>
-        <div>Description: {tokenMetadata ? tokenMetadata.slice(56, 86) : null} </div>
-        <div>Project Completed: {tokenMetadata ? tokenMetadata.slice(196, 197) : null} </div> */}
-        {/* <img src={tokenMetadata ? tokenMetadata.slice(96, 171) : null} ></img> */}
-        
+        <div>
+        {/* 'https://ipfs.io/ipfs/QmcGZuEdFZNY7pxnKCfCVckXhABw4eLYZcYBNvExYZv5TP?filename=2.png' */}
+        {/* 'https://ipfs.io/ipfs/QmcGZuEdFZNY7pxnKCfCVckXhABw4eLYZcYBNvExYZv5TP'  */}
+        <img style={{paddingLeft:'100px', marginBottom: '20px'}} id='img' src={'https://ipfs.io/ipfs/QmcGZuEdFZNY7pxnKCfCVckXhABw4eLYZcYBNvExYZv5TP'} alt='image file'/>
+        <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Member ID: {tokenMetadata.memberId} </div>
+        <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', paddingTop:'20px', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Description: {tokenMetadata.description}</div>
+        {/* <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', paddingTop:'20px', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Image URL: <a style={{'color': 'blue'}} target='_blank' href={tokenMetadata.image} >ArchiDAO NFT Image </a></div> */}
+        <div style={{textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', fontWeight:'bold', paddingTop:'20px', fontSize:'20px', letterSpacing:'8px' }}><a style={{color:'orange'}} href='ipfs://bafybeiby7if73utdzlbwo2cm2rygtcse5j3wsr2pogylwt4jw46pzzeq3e/#/archidaogoerli.eth' target='_blank'>SnapShot Voting</a></div>
       </div>
     )
   }
 
-  const spliceTokenURI = () => {
-    console.log(tokenURI)
-  }
-
-
-
-
   return (
     <div className="App">
- 
-            <div className="about__container">
-              {walletAddress === 'null'? (
-                            <button onClick={connectMetamask} style={{position:'fixed', right:'8vw', top:'130px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Connect Wallet</button>
-              ):
-              (
-                <button onClick={disconnectMetamask} style={{position:'fixed', right:'8vw', top:'130px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Disconnect Wallet</button>
-              )}
-            <div className="about__content"  ><p style={{position:'fixed', right:'8vw', top:'180px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p></div>
-                <h1 className="about__title" style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px'}}>DASHBOARD</h1>
-                <div className="about__content" >
-                    <p style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'10px'}}>ArchiDAO Members Count:</p>
-             
-                </div>
-            </div>
-          
-
-        {/* <div>Block Number: {blockNumber}</div> */}
-        {/* <button onClick={mintNFT}>Mint NFT</button> */}
-        <div style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px', fontFamily:'Krona One', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}> {contractName}</div>
-         {/*<div>Contract Symbol: {symbol}</div> */}
-         {tokenMetadata ? (
-       <div className='dash'>
-        <div className='dash__left'> 
-          <div className='dash__left__top'>
-            <div className='titles'>
-              <div>MEMBER ID </div>
-              <div>PROJECTS COMPLETED</div>
-            </div>
-            <div className='boxes1'> 
-           
-              <div>{tokenMetadata ? tokenMetadata.slice(37, 38) : null}</div>
-              <div>{tokenMetadata ? tokenMetadata.slice(196, 197) : null}</div>
-            </div>
-
-             </div>
-             
-          <div className='dash__left__bottom'> 
-          <div className='title'>NFT IMAGE</div>
-          </div>
-        </div>
-        <div className='dash__right'>
-          
-          <div className='dash__right__left'> </div>
-          <div className='dash__right__right'> </div>
-        </div>
-       </div> ) : null}
       
-        <div>
+      <h1>Testnet ({archiDaoContractInstance.provider._network.name})</h1>
+        {/* <button onClick={mintNFT} style={{position:'fixed', top:'150px', backgroundColor:'orange',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }}>Mint NFT</button> */}
+        
+        <h1 className="about__title" style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px'}}>DASHBOARD</h1>
+        
+        <div style={{color:'black', textAlign:'left', paddingLeft:'20px', paddingTop:'50px', fontFamily:'Krona One', fontWeight:'bold'}}>ArchiDAO Members: {membersCount}</div>
+
+        <div style={{color:'black', textAlign:'center', paddingLeft:'100px', paddingTop:'40px', fontFamily:'Krona One', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}> {contractName}</div>
+        {/* <div>Contract Symbol: {symbol}</div> */}
+
+        {walletAddress === null ? 
+              (
+                <button onClick={connectMetamask} style={{position:'fixed', right:'8vw', top:'70px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Connect Wallet</button>
+              )
+              :
+              (
+                <button onClick={disconnectMetamask} style={{position:'fixed', right:'8vw', top:'70px', backgroundColor:'white',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }} >Disconnect Wallet</button>
+              )
+              }
+
+        <p style={{position:'fixed', left:'1vw', top:'60px',   color:'black', textAlign:'right', height:'30px', fontFamily:'EG' }}>Wallet Address: {walletAddress} </p>
+        <br />
+        <div className='results'>
+          <div className='no-results'></div>
           { hideDiv ? <Results /> : null}
         </div>
         

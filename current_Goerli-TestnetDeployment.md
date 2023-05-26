@@ -1,7 +1,17 @@
-Contract Address: 0x7EaEd8E4b176c683CA1173506Df334Fa5eDFea6b
+# Goerli 
+## Goerli Snapshot
+ipfs://bafybeiby7if73utdzlbwo2cm2rygtcse5j3wsr2pogylwt4jw46pzzeq3e/#/archidaogoerli.eth
 
-Contract ABI
+## ENS
+https://app.ens.domains/archidaogoerli.eth
 
+## Goerli Deployment
+### tx hash: 0x23f03e49860f6341a69fca6331965f8f9f1e82401f4c5fdc88b9d48ce514a50e
+
+### Contract address: 0x9f8774A535659865D81361Bb8Fc449Fd1B056d0E
+
+### Contract ABI:
+```json
 [
 	{
 		"inputs": [],
@@ -268,29 +278,6 @@ Contract ABI
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_skill_1",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_skill_2",
-				"type": "uint256"
-			}
-		],
-		"name": "updateMemberSkills",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address[]",
 				"name": "_memberAddress",
 				"type": "address[]"
@@ -299,6 +286,19 @@ Contract ABI
 		"name": "whitelistMember",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "_tokenIds",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -409,93 +409,6 @@ Contract ABI
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "isTokenTransferable",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "memberSkillsStructMap",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "memberId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "skill_1",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "skill_2",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "skill_3",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "skill_4",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "skill_5",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "skill_6",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "skill_7",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "skill_8",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "skill_9",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "skill_10",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "projectsCompleted",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -617,86 +530,63 @@ Contract ABI
 		"type": "function"
 	}
 ]
+```
 
-Solidity contract
-
+### Smart Contract Deployed
+```js
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.16;
+pragma solidity ^0.8.17;
 
 // import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-//check snapshot for voting
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
-// import {Base64} from "./Base64.sol";
 
-contract OnChainArchiDAONFT is ERC721, Ownable, ERC721URIStorage {
+/// @title ArchiDAO non-transferable NFT
+/// @author Hico
+/// @notice This on-chain NFT contract serves as gate access to the ArchiDAO website
+/// @dev All function calls are currently implemented without side effects
+/// @custom:experimental This is an experimental on-chain contract.
+contract ArchiDAO is ERC721, Ownable, ERC721URIStorage {
     using Strings for uint256;
     using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
-    Counters.Counter private _memberIds;
+    Counters.Counter public _tokenIds;
 
-    // PNG image URI on IPFS, can update
-    string public imageIPFSFolderURI = 'https://ipfs.io/ipfs/QmRHgykzBUuQR4FuWUH2mtpabWagLSuxndjD3fK2c7ZJ89/';
+    // ArchiDAO NFT Image folder on IPFS.
+    string public imageIPFSFolderURI = "https://ipfs.io/ipfs/QmXDB9nebRKwSj9Bkio35VxNUR541JkS3ooLcEaogDMPtJ";
 
-//need to have NFT to access to ERC20 tokens to be able to stake, be part of the project
-    struct MemberSkills {
-        uint256 memberId;
-        uint256 skill_1; //engineering : value 0 - 100 max.
-        uint256 skill_2; //design
-        uint256 skill_3; //registration
-        uint256 skill_4; //communication / management 
-        uint256 skill_5; //academic / educating
-        uint256 skill_6; //community / onboarding-management-growth
-        uint256 skill_7; 
-        uint256 skill_8;
-        uint256 skill_9;
-        uint256 skill_10;
-        uint256 projectsCompleted; 
-    }
-    //MemberSkills Struct mapping
-    mapping (address => MemberSkills) public memberSkillsStructMap;
-
-    // struct ProjectDetail {
-    //     string projectName;
-    //     string projectDescription;
-    //     string projectTimeline;
-    //     string projectCost;
-    //     uint256 skillPointsGained1;
-    //     uint256 skillPointsGained2;
-    //     uint256 skillPointsGained3;
-    // }
-    // // ProjectDetail struct mapping
-    // mapping(address => (mapping(uint) => ProjectDetail)) projectDetails;
-
-    //mapping for addresses to NFTS
+    // Address to NFT index mapping
     mapping (address => uint256) public addressToNFTNumber;
 
-    //whitelist member
+    // Address to bool whitelisted member mapping
     mapping (address => bool) public whitelistedMember;
 
-    // Used to make th eNFT non-transferable
-    bool public isTokenTransferable = false;
+    // To create non-transferable mechanism (mimic soulbound)
+    // bool public isTokenTransferable = false;
 
-    constructor() ERC721 ("ArchiDAO Skills NFT", "ARCH") {
-
+    constructor() ERC721 ("ArchiDAO NFT", "ARCH") {
+        for (uint i = 1; i <= 5; i++) {
+            mint();
+        }
     }
 
-    //whitelist member address to enable minting
+    /// @notice Batch address whitelisting for minting eligibility of members
+    /// @dev 
+    /// @param _memberAddress: Multiple member addresses to be whitelisted
     function whitelistMember(address[] memory _memberAddress) public onlyOwner {
         // require(!whitelistedMember[_memberAddress], "Member already whitelisted");
-        //require: integrate other requirements needed before address whitelisted (referral)
 
-        //Batch whitelisting
         for(uint256 i = 0; i < _memberAddress.length; i++ ) {
             whitelistedMember[_memberAddress[i]] = true;
         }
     }
 
-    // Remove whitelisted member that hasnt minted a token yet
+    /// @notice Remove a whitelisted address
+    /// @dev 
+    /// @param _memberAddress: Address to be removed
     function removeWhitelistedMember(address _memberAddress) public {
         require(whitelistedMember[_memberAddress], "Member not whitelisted");
         require(balanceOf(_memberAddress) < 1, "Member already minted NFT");
@@ -704,23 +594,15 @@ contract OnChainArchiDAONFT is ERC721, Ownable, ERC721URIStorage {
         whitelistedMember[_memberAddress] = false;
     }
 
-    //Minting NFT function
-    function mint() public /*onlyRole(MINTER_ROLE)*/ {
-        // Address must be whitelisted to be able ot mint
-        // require(whitelistedMember[msg.sender], "Not whitelisted");
-
-        // Each Address can only mint 1 NFT
-        // require(addressToNFTNumber[msg.sender] == 0, "Already minted NFT");
-
-        //require: Additional requirements before being able to mint (time, cost)
-        //IE must be whitelisted for certain amount of time and complete tasks
+    /// @notice Whitelisted addresses can mint ArchiDAONFT
+    /// @dev When NFT minted the MemberSkills Struc is initiated with 0 values for all skills
+    /// @custom:whitelist - Whitelisting not implemented for testing contract
+    function mint() public onlyOwner {
+        // require(whitelistedMember[msg.sender], "Address not whitelisted");
+        // require(addressToNFTNumber[msg.sender] == 0, "Already minted NFT");        
 
         _tokenIds.increment();
         uint256 currentTokenId = _tokenIds.current();
-
-        memberSkillsStructMap[msg.sender] = MemberSkills(currentTokenId, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-
-        // Initialise ProjectDetail struct with mapping projectDetails
 
         addressToNFTNumber[msg.sender] = currentTokenId;
 
@@ -729,12 +611,13 @@ contract OnChainArchiDAONFT is ERC721, Ownable, ERC721URIStorage {
         _setTokenURI(currentTokenId, getTokenURI(currentTokenId));
     }
 
+    /// @notice Retrieves the tokenURI of the NFT metadata
+    /// @dev Encodes the dataURI into base64
+    /// @return Base64 encoded metadata of NFT viewable in browser
     function getTokenURI(uint256 tokenId) public view returns (string memory){
 
         bytes memory dataURI = abi.encodePacked(
-                getTokenURIInitialMetadata(tokenId),
-                getSkillsURIMetadata(tokenId),
-                getSkillsURIMetadata2(tokenId)
+                getTokenURIInitialMetadata(tokenId)
         );
 
         return string(
@@ -745,21 +628,20 @@ contract OnChainArchiDAONFT is ERC721, Ownable, ERC721URIStorage {
         );
     }
 
+    /// @notice Builds the NFT metadata and encodes it to base64
+    /// @dev Encodes the dataURI into base64.  
+    /// @return Base64 encoded metadata - initial metadata
     function getTokenURIInitialMetadata(uint256 tokenId) internal view returns (string memory) {
         
         string memory memberTokenId = tokenId.toString();
 
-        address addressOfNFTOwner = ownerOf(tokenId);
-        MemberSkills storage memberSkillsStruct = memberSkillsStructMap[addressOfNFTOwner];
-        string memory memberProjectsCompleted = memberSkillsStruct.projectsCompleted.toString();
-
         bytes memory dataURI = abi.encodePacked(
-                '{',
-                '"name": "ArchiDAO NFT"',  ',',
-                '"memberId": "', memberTokenId, '",', 
-                '"description": "NFT for member skills attained",',
-                '"image": "', imageIPFSFolderURI, memberTokenId, '.png', '",' // Base64 or IPFS URI string, each token can get a different image if in IPFS folder from 1 - nth. Maybe just start with 50 members, then increase token count.//generateSkills(tokenId)
-                '"Projects Completed": "', memberProjectsCompleted, '",'
+                '{ ',
+                '"name": "ArchiDAO NFT"',  ', ',
+                '"memberId": "', memberTokenId, '", ', 
+                '"description": "ArchiDAO NFT membership", ',
+                '"image": "', imageIPFSFolderURI, memberTokenId, '.png', '"' // Base64 or IPFS URI string, each token can get a different image if in IPFS folder from 1 - nth. Maybe just start with 50 members, then increase token count.//generateSkills(tokenId)
+                ' }'
         );
 
         return string(
@@ -767,91 +649,20 @@ contract OnChainArchiDAONFT is ERC721, Ownable, ERC721URIStorage {
         ); 
     }
 
-    function getSkillsURIMetadata(uint256 tokenId) internal view returns (string memory) {
-        
-        address addressOfNFTOwner = ownerOf(tokenId);
-        MemberSkills storage memberSkillsStruct = memberSkillsStructMap[addressOfNFTOwner];
-
-        string memory memberSkillLevel_1 = memberSkillsStruct.skill_1.toString();
-        string memory memberSkillLevel_2 = memberSkillsStruct.skill_2.toString();
-        string memory memberSkillLevel_3 = memberSkillsStruct.skill_3.toString();
-        string memory memberSkillLevel_4 = memberSkillsStruct.skill_4.toString();
-        string memory memberSkillLevel_5 = memberSkillsStruct.skill_5.toString();
-
-        bytes memory dataURI = abi.encodePacked(
-                '"skill_1": "', memberSkillLevel_1, '",', 
-                '"skill_2": "', memberSkillLevel_2, '",', 
-                '"skill_3": "', memberSkillLevel_3, '",', 
-                '"skill_4": "', memberSkillLevel_4, '",', 
-                '"skill_5": "', memberSkillLevel_5, '",'
-        );
-
-        return string(
-            dataURI
-        );
-    }
-
-    function getSkillsURIMetadata2(uint256 tokenId) internal view returns (string memory) {
-        
-        address addressOfNFTOwner = ownerOf(tokenId);
-        MemberSkills storage memberSkillsStruct = memberSkillsStructMap[addressOfNFTOwner];
-
-        string memory memberSkillLevel_6 = memberSkillsStruct.skill_6.toString();
-        string memory memberSkillLevel_7 = memberSkillsStruct.skill_7.toString();
-        string memory memberSkillLevel_8 = memberSkillsStruct.skill_8.toString();
-        string memory memberSkillLevel_9 = memberSkillsStruct.skill_9.toString();
-        string memory memberSkillLevel_10 = memberSkillsStruct.skill_10.toString();
-
-        bytes memory dataURI = abi.encodePacked(
-                '"skill_6": "', memberSkillLevel_6, '",', 
-                '"skill_7": "', memberSkillLevel_7, '",', 
-                '"skill_8": "', memberSkillLevel_8, '",', 
-                '"skill_9": "', memberSkillLevel_9, '",', 
-                '"skill_10": "', memberSkillLevel_10, '",', 
-            '}'
-        );
-
-        return string(
-            dataURI
-        );
-    }
-
+    /// @notice Changes the IPFS folder location URI
+    /// @dev Can add any string of folder location which contains images, preferably IPFS
     function updateIPFSImageFolderURI (string memory newIPFSURI) public {
         imageIPFSFolderURI = newIPFSURI;
     }
 
-    //Update memberSkillsStruc with increased skill level
-    function updateMemberSkills(uint tokenId, uint _skill_1, uint _skill_2) public {
-        // require token exists
-        // onlyOwner (multisig)
-
-        address memberSkillsToUpdate = ownerOf(tokenId);
-
-        MemberSkills storage memberSkillsStruct = memberSkillsStructMap[memberSkillsToUpdate];
-
-        memberSkillsStruct.projectsCompleted++; 
-
-        memberSkillsStruct.skill_1 = _skill_1;
-        memberSkillsStruct.skill_2 = _skill_2;
-        // memberSkillsStruct.skill_2 = _skill_3;
-        // memberSkillsStruct.skill_2 = _skill_4;
-        // memberSkillsStruct.skill_2 = _skill_5;
-        // memberSkillsStruct.skill_2 = _skill_6;
-        // memberSkillsStruct.skill_2 = _skill_7;
-        // memberSkillsStruct.skill_2 = _skill_8;
-        // memberSkillsStruct.skill_2 = _skill_9;
-        // memberSkillsStruct.skill_2 = _skill_10;
-
-        _setTokenURI(tokenId, getTokenURI(tokenId));
-    }
 
     // The following functions are overrides required by Solidity.
-    // function _afterTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
-    //     internal
-    //     override(ERC721, ERC721Enumerable)
-    // {
-    //     super._afterTokenTransfer(from, to, tokenId, batchSize);
-    // }
+    function _afterTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
+        internal
+        override(ERC721)
+    {
+        super._afterTokenTransfer(from, to, tokenId, batchSize);
+    }
 
     function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
         super._burn(tokenId);
@@ -875,14 +686,17 @@ contract OnChainArchiDAONFT is ERC721, Ownable, ERC721URIStorage {
         return super.supportsInterface(interfaceId);
     }
 
+    /// @notice Before a token is transferred this function will run
+    /// @dev Added require to ensure the token can not be transferred
     function transferFrom(address _from, address _to, uint256 _tokenId) 
         public 
         override(ERC721)
     {
     // Check if the NFT is transferable
-    require(isTokenTransferable, "The NFT is soulbound and not transferable");
+    // require(isTokenTransferable, "The NFT is soulbound and not transferable");
 
     // Perform the transfer as normal
     return super.transferFrom(_from, _to, _tokenId);
     }
 }
+```
