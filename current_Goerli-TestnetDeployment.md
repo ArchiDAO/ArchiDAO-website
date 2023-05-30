@@ -6,9 +6,11 @@ ipfs://bafybeiby7if73utdzlbwo2cm2rygtcse5j3wsr2pogylwt4jw46pzzeq3e/#/archidaogoe
 https://app.ens.domains/archidaogoerli.eth
 
 ## Goerli Deployment
-### tx hash: 0x23f03e49860f6341a69fca6331965f8f9f1e82401f4c5fdc88b9d48ce514a50e
+### tx hash: https://goerli.etherscan.io/tx/0x1726457b348ee641aba164abbceccb98c62e8c3cb8623a6fcc5329ffb114d8d6
 
-### Contract address: 0x9f8774A535659865D81361Bb8Fc449Fd1B056d0E
+### Contract address: 0x97B1fEAD29c5a0EA79E5Fbad607D0071ed54198a
+
+### Whitelisted Addresses: ["0x04Ed8A52c9D99eB0925632273Ef30c5dbE0823dC", "0x31C166c980c1B3fDF2b20Eb40CE1694a55676AB6", "0xEBE7e47e89129382D0837F067Ed51D318c891307", "0x44CB7368a1Cf435B6C72A9BC0e225D01FEE157E3"]
 
 ### Contract ABI:
 ```json
@@ -416,6 +418,19 @@ https://app.ens.domains/archidaogoerli.eth
 	},
 	{
 		"inputs": [],
+		"name": "isTokenTransferable",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "name",
 		"outputs": [
 			{
@@ -548,7 +563,6 @@ import "@openzeppelin/contracts/utils/Base64.sol";
 /// @title ArchiDAO non-transferable NFT
 /// @author Hico
 /// @notice This on-chain NFT contract serves as gate access to the ArchiDAO website
-/// @dev All function calls are currently implemented without side effects
 /// @custom:experimental This is an experimental on-chain contract.
 contract ArchiDAO is ERC721, Ownable, ERC721URIStorage {
     using Strings for uint256;
@@ -556,7 +570,7 @@ contract ArchiDAO is ERC721, Ownable, ERC721URIStorage {
     Counters.Counter public _tokenIds;
 
     // ArchiDAO NFT Image folder on IPFS.
-    string public imageIPFSFolderURI = "https://ipfs.io/ipfs/QmXDB9nebRKwSj9Bkio35VxNUR541JkS3ooLcEaogDMPtJ";
+    string public imageIPFSFolderURI = "https://ipfs.io/ipfs/QmXDB9nebRKwSj9Bkio35VxNUR541JkS3ooLcEaogDMPtJ/";
 
     // Address to NFT index mapping
     mapping (address => uint256) public addressToNFTNumber;
@@ -565,13 +579,9 @@ contract ArchiDAO is ERC721, Ownable, ERC721URIStorage {
     mapping (address => bool) public whitelistedMember;
 
     // To create non-transferable mechanism (mimic soulbound)
-    // bool public isTokenTransferable = false;
+    bool public isTokenTransferable = false;
 
-    constructor() ERC721 ("ArchiDAO NFT", "ARCH") {
-        for (uint i = 1; i <= 5; i++) {
-            mint();
-        }
-    }
+    constructor() ERC721 ("ArchiDAO NFT", "ARCH") { }
 
     /// @notice Batch address whitelisting for minting eligibility of members
     /// @dev 
@@ -580,13 +590,14 @@ contract ArchiDAO is ERC721, Ownable, ERC721URIStorage {
         // require(!whitelistedMember[_memberAddress], "Member already whitelisted");
 
         for(uint256 i = 0; i < _memberAddress.length; i++ ) {
+            require(!whitelistedMember[_memberAddress[i]], "Member already whitelisted");
             whitelistedMember[_memberAddress[i]] = true;
         }
     }
 
     /// @notice Remove a whitelisted address
     /// @dev 
-    /// @param _memberAddress: Address to be removed
+    /// @param _memberAddress: Whitelist address to be removed
     function removeWhitelistedMember(address _memberAddress) public {
         require(whitelistedMember[_memberAddress], "Member not whitelisted");
         require(balanceOf(_memberAddress) < 1, "Member already minted NFT");
@@ -595,11 +606,10 @@ contract ArchiDAO is ERC721, Ownable, ERC721URIStorage {
     }
 
     /// @notice Whitelisted addresses can mint ArchiDAONFT
-    /// @dev When NFT minted the MemberSkills Struc is initiated with 0 values for all skills
-    /// @custom:whitelist - Whitelisting not implemented for testing contract
-    function mint() public onlyOwner {
-        // require(whitelistedMember[msg.sender], "Address not whitelisted");
-        // require(addressToNFTNumber[msg.sender] == 0, "Already minted NFT");        
+    /// @dev 
+    function mint() public {
+        require(whitelistedMember[msg.sender], "Address not whitelisted");
+        require(addressToNFTNumber[msg.sender] == 0, "Already minted NFT");        
 
         _tokenIds.increment();
         uint256 currentTokenId = _tokenIds.current();
@@ -639,7 +649,7 @@ contract ArchiDAO is ERC721, Ownable, ERC721URIStorage {
                 '{ ',
                 '"name": "ArchiDAO NFT"',  ', ',
                 '"memberId": "', memberTokenId, '", ', 
-                '"description": "ArchiDAO NFT membership", ',
+                '"description": "ArchiDAO NFT membership TESTING", ',
                 '"image": "', imageIPFSFolderURI, memberTokenId, '.png', '"' // Base64 or IPFS URI string, each token can get a different image if in IPFS folder from 1 - nth. Maybe just start with 50 members, then increase token count.//generateSkills(tokenId)
                 ' }'
         );
@@ -649,12 +659,12 @@ contract ArchiDAO is ERC721, Ownable, ERC721URIStorage {
         ); 
     }
 
-    /// @notice Changes the IPFS folder location URI
+    /// @notice Changes the IPFS folder location URI for newly minted NFT's
     /// @dev Can add any string of folder location which contains images, preferably IPFS
     function updateIPFSImageFolderURI (string memory newIPFSURI) public {
         imageIPFSFolderURI = newIPFSURI;
+        // To also change base64 URI minted on-chain
     }
-
 
     // The following functions are overrides required by Solidity.
     function _afterTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
@@ -693,7 +703,7 @@ contract ArchiDAO is ERC721, Ownable, ERC721URIStorage {
         override(ERC721)
     {
     // Check if the NFT is transferable
-    // require(isTokenTransferable, "The NFT is soulbound and not transferable");
+    require(isTokenTransferable, "The NFT is not transferable");
 
     // Perform the transfer as normal
     return super.transferFrom(_from, _to, _tokenId);

@@ -24,7 +24,7 @@ const network = "goerli"; //"maticmum";
 // const alchemyProvider = new ethers.providers.AlchemyProvider(network, process.env.REACT_APP_ALCHEMY_API_KEY); //goerli
 const infuraProvider = new ethers.providers.InfuraProvider( network, [process.env.INFURA_GOERLI_API])
 
-const contractAddress = "0x9f8774A535659865D81361Bb8Fc449Fd1B056d0E"; //Goerli
+const contractAddress = "0x97B1fEAD29c5a0EA79E5Fbad607D0071ed54198a"; //Goerli
 
 const contractABI = [
     "function mint()",
@@ -203,7 +203,7 @@ function Dashboard() {
     <div className="App">
       
       <h1>Testnet ({archiDaoContractInstance.provider._network.name})</h1>
-        {/* <button onClick={mintNFT} style={{position:'fixed', top:'150px', backgroundColor:'orange',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }}>Mint NFT</button> */}
+        <button onClick={mintNFT} style={{position:'fixed', top:'150px', backgroundColor:'orange',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }}>Mint NFT</button>
         
         <h1 className="about__title" style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px'}}>DASHBOARD</h1>
         
