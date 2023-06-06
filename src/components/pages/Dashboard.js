@@ -123,7 +123,11 @@ function Dashboard() {
       setHideDiv(true);
       getMetadata(getNumber)
     } else {
-      document.getElementsByClassName('no-results')[0].innerHTML = '<h1>You are not a ArchiDAO member</h1>'
+      document.getElementsByClassName('no-results')[0].innerHTML = `
+          <h1>You are not yet a member of ArchiDAO</h1>
+          <h2>Reach out to a core ArchiDAO member to get NFT whitelisting for testing</h2>
+          <h3>Join ArchiDAO Discord: <a href='https://discord.gg/rVR4YAmCGj' target='_blank'>https://discord.gg/rVR4YAmCGj</a></h3>
+        `
     }
   }
 
@@ -143,12 +147,26 @@ function Dashboard() {
   }
 
   const mintNFT = async () => {
-    const archiDaoContractInstanceSigner = new ethers.Contract(contractAddress, contractABI, walletSigner);
-    if(walletSigner === null) {
-      alert('Connect Metamask');
+    
+    try {
+      // if(walletSigner === null) {
+      //   alert('Connect Metamask');
+      // }  
+      const archiDaoContractInstanceSigner = new ethers.Contract(contractAddress, contractABI, walletSigner);
+      const mintNFT = await archiDaoContractInstanceSigner.mint(); 
+      console.log(mintNFT);
+    } catch (error) {
+      if(error.reason == 'sending a transaction requires a signer') {
+        alert('Connect MetaMask Wallet');
+      } else if(error.reason == 'execution reverted: Address not whitelisted') {
+        alert(error.reason + '\n\n***Reach out to a core member for whitelisting***' )
+      } else {
+        alert(error.reason);
+      }
     }
-    const mintNFT = await archiDaoContractInstanceSigner.mint(); 
-    console.log(mintNFT);
+
+
+
   }
 
   // useEffect(() => {
@@ -185,12 +203,12 @@ function Dashboard() {
 
   const Results = () => {
 
-
+    // console.log(tokenMetadata.image)
     return (
         <div>
         {/* 'https://ipfs.io/ipfs/QmcGZuEdFZNY7pxnKCfCVckXhABw4eLYZcYBNvExYZv5TP?filename=2.png' */}
         {/* 'https://ipfs.io/ipfs/QmcGZuEdFZNY7pxnKCfCVckXhABw4eLYZcYBNvExYZv5TP'  */}
-        <img style={{paddingLeft:'100px', marginBottom: '20px'}} id='img' src={'https://ipfs.io/ipfs/QmcGZuEdFZNY7pxnKCfCVckXhABw4eLYZcYBNvExYZv5TP'} alt='image file'/>
+        <img style={{paddingLeft:'100px', marginBottom: '20px'}} id='img' src={'https://ipfs.io/ipfs/QmcGZuEdFZNY7pxnKCfCVckXhABw4eLYZcYBNvExYZv5TP?filename=1.png'} alt='image file'/>
         <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Member ID: {tokenMetadata.memberId} </div>
         <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', paddingTop:'20px', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Description: {tokenMetadata.description}</div>
         {/* <div style={{color:'black', textAlign:'center', paddingLeft:'100px', fontFamily:'Krona One', paddingTop:'20px', fontWeight:'bold', fontSize:'20px', letterSpacing:'8px' }}>Image URL: <a style={{'color': 'blue'}} target='_blank' href={tokenMetadata.image} >ArchiDAO NFT Image </a></div> */}
@@ -203,7 +221,7 @@ function Dashboard() {
     <div className="App">
       
       <h1>Testnet ({archiDaoContractInstance.provider._network.name})</h1>
-        <button onClick={mintNFT} style={{position:'fixed', top:'150px', backgroundColor:'orange',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }}>Mint NFT</button>
+        <button onClick={mintNFT} style={{position:'block', top:'150px', backgroundColor:'orange',  color:'black', textAlign:'right', height:'30px', fontFamily:'EG', fontSize:'20px' }}>Mint NFT</button>
         
         <h1 className="about__title" style={{color:'black', textAlign:'left', paddingLeft:'100px', paddingTop:'90px'}}>DASHBOARD</h1>
         
